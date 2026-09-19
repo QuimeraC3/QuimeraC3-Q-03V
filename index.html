@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitología detrás de Quimera &bull; Ecosistema Científico y Académico</title>
+    <style>
+        :root {
+            --text-main: #0f172a;
+            --primary: #0f766e;
+            --accent: #c88b32; /* Cobre Dorado */
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            background-color: #000000;
+        }
+
+        /* Transición de desenfoque general */
+        #bg-layer, header, main, .top-bar, footer {
+            transition: filter 0.5s ease, opacity 500ms ease;
+        }
+
+        body.modal-blur-active #bg-layer,
+        body.modal-blur-active header,
+        body.modal-blur-active main,
+        body.modal-blur-active .top-bar,
+        body.modal-blur-active footer {
+            filter: blur(8px);
+        }
+
+        /* Capa de fondo */
+        #bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: linear-gradient(rgba(15, 23, 42, 0.0), rgba(15, 23, 42, 0.0)), url('Quimera_MDQ.png');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            opacity: 0;
+            transition: opacity 1000ms ease, filter 0.5s ease;
+        }
+
+        /* Capa intro negra */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000000;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 1000ms ease;
+        }
+
+        /* Gran Final a blanco */
+        body.exit-active #bg-layer,
+        body.exit-active header,
+        body.exit-active main,
+        body.exit-active .top-bar,
+        body.exit-active footer {
+            filter: blur(15px);
+            transition: filter 800ms ease;
+        }
+
+        body.exit-active #intro-overlay {
+            opacity: 1;
+            background-color: #ffffff;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            pointer-events: auto;
+            transition: opacity 800ms ease, background-color 800ms ease, backdrop-filter 800ms ease;
+        }
+
+        /* Navegación Top Bar */
+        .top-bar, header, footer {
+            opacity: 0;
+            transition: opacity 500ms ease, filter 0.5s ease;
+        }
+
+        .top-bar {
+            background-color: rgba(11, 19, 41, 0.0);
+            padding: 0.85rem 2rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .top-bar-container {
+            max-width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            color: #ffffff;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 0.99rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            transition: color 0.2s ease, opacity 500ms ease;
+        }
+
+        .brand-logo:hover {
+            color: #38bdf8;
+            text-decoration: underline;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.25rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #38bdf8;
+        }
+        
+        #audio-toggle, #fullscreen-toggle {
+            background: rgba(200, 139, 50, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: opacity 500ms ease;
+        }
+
+        #audio-toggle:hover, #fullscreen-toggle:hover {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        /* HEADER ESTRUCTURAL SEGURO - POSICIONES CARTESIANAS AJUSTADAS */
+        header {
+            font-family: Georgia, serif;
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            /* Flecha 01: Padding superior de 10vh para ubicar "MITOLOGÍA DETRÁS DE" */
+            padding: 03vh 2rem 1rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: Georgia, serif;
+            font-size: 2rem; /* Tamaño base */
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1.3;
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Flecha 02: Separación vertical exacta para la palabra "QUIMERA" */
+        .arrow-02-text {
+            margin-top: 23vh;
+            margin-bottom: 1rem;
+        }
+
+        /* PALABRA QUIMERA ELÁSTICA (CLAMP) */
+        #word-quimera {
+            display: inline-block;
+            /* Crece fluido entre 2.5rem en móviles y 6rem en monitores grandes */
+            font-size: clamp(2.5rem, 10vw, 6rem); 
+            transition: color 0.3s ease;
+            line-height: 1.1;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            margin: 0;
+            text-align: center;
+            max-width: 750px;
+        }
+
+        .hidden-letter {
+            opacity: 0;
+            display: inline-block;
+        }
+        .hidden-letter.revealed {
+            opacity: 1;
+        }
+
+        #word-quimera.ready-to-click, #word-quimera.finale-active {
+            cursor: pointer;
+        }
+
+        #word-quimera.finale-active span {
+            display: inline-block;
+            animation: finaleSweep 2s infinite;
+            animation-delay: calc(var(--i) * 0.1s);
+        }
+
+        @keyframes finaleSweep {
+            0%, 37.5%, 50%, 87.5%, 100% { color: #ffffff; }
+            12.5%, 25%, 62.5%, 75% { color: var(--accent); }
+        }
+
+        /* TARJETA CENTRAL - Flecha 03 */
+        main {
+            flex: 1;
+            display: flex;
+            /* Modificado a flex-end para anclar la tarjeta hacia abajo */
+            align-items: flex-end; 
+            justify-content: center;
+            /* Flecha 03: Padding bottom de 10vh define la coordenada Y final */
+            padding: 2rem 2rem 07vh 2rem; 
+            z-index: 10;
+            position: relative;
+            transition: filter 0.5s ease;
+        }
+
+        .seq-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 2rem 3rem;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s ease, opacity 0.5s ease;
+            display: none;
+            max-width: 600px;
+            width: 100%;
+            transform: translateY(20px);
+        }
+
+        .seq-card h2 {
+            font-family: Georgia, serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            min-height: 2.2rem;
+        }
+
+        .seq-card:hover { transform: translateY(20px) scale(1.05); }
+
+        .tv-on-card { animation: tvTurnOnCard 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .tv-off-card { animation: tvTurnOffCard 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+
+        @keyframes tvTurnOnCard {
+            0% { transform: translateY(20px) scale(0, 0); opacity: 0; filter: brightness(10); }
+            40% { transform: translateY(20px) scale(0.001, 0.005); opacity: 1; filter: brightness(5); }
+            70% { transform: translateY(20px) scale(1, 0.005); opacity: 1; filter: brightness(2); }
+            100% { transform: translateY(20px) scale(1, 1); opacity: 1; filter: brightness(1); }
+        }
+
+        @keyframes tvTurnOffCard {
+            0% { transform: translateY(20px) scale(1, 1); opacity: 1; filter: brightness(1); }
+            40% { transform: translateY(20px) scale(1, 0.005); opacity: 1; filter: brightness(2); }
+            70% { transform: translateY(20px) scale(0.001, 0.005); opacity: 1; filter: brightness(5); }
+            100% { transform: translateY(20px) scale(0, 0); opacity: 0; filter: brightness(10); }
+        }
+
+        /* MODALES */
+        .modal-overlay, .submodal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay {
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+        }
+
+        .submodal-overlay {
+            background: rgba(0,0,0,0.95);
+            z-index: 3000;
+            transition: opacity 0.5s ease;
+        }
+
+        .modal-overlay.show, .submodal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-window, .submodal-text-window {
+            background: #ffffff;
+            padding: 3rem;
+            border-radius: 12px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--accent);
+        }
+
+        .submodal-text-window {
+            display: none;
+            color: var(--text-main);
+        }
+
+        .tv-on { animation: tvTurnOn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards !important; }
+        .tv-off { animation: tvTurnOff 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards !important; }
+
+        @keyframes tvTurnOn {
+            0% { transform: scale(0, 0); opacity: 0; filter: brightness(10); }
+            40% { transform: scale(0.001, 0.005); opacity: 1; filter: brightness(5); }
+            70% { transform: scale(1, 0.005); opacity: 1; filter: brightness(2); }
+            100% { transform: scale(1, 1); opacity: 1; filter: brightness(1); }
+        }
+
+        @keyframes tvTurnOff {
+            0% { transform: scale(1, 1); opacity: 1; filter: brightness(1); }
+            40% { transform: scale(1, 0.005); opacity: 1; filter: brightness(2); }
+            70% { transform: scale(0.001, 0.005); opacity: 1; filter: brightness(5); }
+            100% { transform: scale(0, 0); opacity: 0; filter: brightness(10); }
+        }
+
+        .modal-title {
+            font-family: Georgia, serif;
+            color: var(--accent);
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(200,139,50,0.3);
+            padding-bottom: 0.5rem;
+            min-height: 2.5rem;
+            text-align: center;
+        }
+
+        .modal-body {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            white-space: pre-line;
+            min-height: 100px;
+        }
+
+        .modal-body a {
+            color: var(--accent);
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .modal-body a:hover { color: #000; }
+
+        .modal-close-wrapper {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: bold;
+            min-height: 2rem;
+        }
+
+        .modal-close-btn {
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close-btn:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2rem;
+            background-color: var(--accent);
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+            opacity: 0; 
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .submodal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .submodal-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(200, 139, 50, 0.4);
+            opacity: 0;
+            transition: opacity 800ms ease-in-out;
+        }
+
+        .submodal-close {
+            position: absolute;
+            top: -40px; right: -40px;
+            color: var(--accent);
+            font-size: 2.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s;
+            z-index: 3001;
+        }
+        .submodal-close:hover { transform: scale(1.2); }
+
+        footer {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            padding: 0.8rem 2rem;
+            background-color: rgba(11, 19, 41, 0.2);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+            transition: filter 0.5s ease;
+        }
+
+        /* MEDIA QUERIES PARA MÓVILES (SEGURIDAD RESPONSIVA) */
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.5rem; }
+            header p { font-size: 1rem; }
+            .seq-card, .modal-window, .submodal-text-window { padding: 1.5rem; }
+            .modal-title { font-size: 1.4rem; }
+            .modal-body { font-size: 1rem; }
+            /* Reposicionar la X para que no se salga de pantallas táctiles estrechas */
+            .submodal-close { top: -15px; right: 0px; font-size: 2rem; text-shadow: 0 0 10px #000; }
+            .top-bar { flex-direction: column; gap: 0.5rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
+    <div id="bg-layer"></div>
+    <div id="intro-overlay"></div>
+
+    <nav class="top-bar">
+        <div class="top-bar-container">
+            <a href="https://quimerac3.github.io/" class="brand-logo" data-text="QUIMERA - Inicio General"></a>
+            <ul class="nav-links">
+                <li><a href="#" id="audio-toggle"><span style="color: #ffffff;">🎵</span> Música: OFF</a></li>
+                <li><a href="#" id="fullscreen-toggle">⛶ Pantalla Completa</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <!-- Flecha 01: MITOLOGÍA DETRÁS DE -->
+        <h1>
+            <span id="header-line1"></span>
+        </h1>
+        
+        <!-- Flecha 02: QUIMERA (Separada para permitir precisión cartesiana) -->
+        <h1 class="arrow-02-text">
+            <span id="word-quimera">
+                <span style="--i:1" class="hidden-letter">Q</span><span style="--i:2" class="hidden-letter">U</span><span style="--i:3" class="hidden-letter">I</span><span style="--i:4" class="hidden-letter">M</span><span style="--i:5" class="hidden-letter">E</span><span style="--i:6" class="hidden-letter">R</span><span style="--i:7" class="hidden-letter">A</span>
+            </span><span class="cursor" id="header-cursor"></span>
+        </h1>
+        <p data-text="El origen simbólico y conceptual que da vida e identidad a nuestro ecosistema."></p>
+    </header>
+
+    <main>
+        <!-- Flecha 03: Recuadro posicionado al fondo -->
+        <div id="central-card" class="seq-card">
+            <h2><span id="card-title-text"></span><span class="cursor" id="card-cursor"></span></h2>
+        </div>
+    </main>
+
+    <div id="main-modal" class="modal-overlay">
+        <div class="modal-window" id="modal-window">
+            <div class="modal-title" id="modal-title"></div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-close-wrapper">
+                <span class="modal-close-btn" id="modal-close-btn"></span><span class="cursor" id="modal-cursor"></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="sub-modal" class="submodal-overlay">
+        <div class="submodal-content" id="submodal-content-wrapper">
+            <span class="submodal-close" id="submodal-x-btn" onclick="closeSubModal()">&times;</span>
+            <img id="submodal-img" src="" alt="Esquema Quimera" style="opacity: 0;">
+            
+            <div class="submodal-text-window" id="submodal-text-window">
+                <div class="modal-title" id="sub-modal-title"></div>
+                <div class="modal-body" id="sub-modal-body"></div>
+                <div class="modal-close-wrapper">
+                    <span class="modal-close-btn" id="sub-modal-close-btn"></span><span class="cursor" id="sub-modal-cursor"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p data-text="&bull; &copy; 2026 Instituto Quimera. &bull; Centro de Investigación, Docencia, Servicio y Difusión. &bull; Dr.C. Cesar Cerezo Camacho. &bull; Todos los derechos reservados. &bull;"></p>
+    </footer>
+
+    <script>
+        // Solución caché (bfcache)
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) window.location.reload();
+        });
+
+        // PRECARGA DE IMÁGENES
+        const imageList = ['01-borrador_T-P.png', '02-Teoria-Preg.png', '03-HECE.png', '04-MHDC.png', 'ECQ.png'];
+        imageList.forEach(src => { const img = new Image(); img.src = src; });
+
+        const storyData = [
+            {
+                title: "01. EL MITO QUE DIO NOMBRE AL INSTITUTO.",
+                text: "Mucho antes de convertirse en el nombre de un instituto dedicado al conocimiento, Quimera pertenecía al mundo de la mitología griega.\n\nSu historia es la de un ser extraordinario y monstruoso que, según las fuentes antiguas, habitaba en Licia.\n\nQuimera era descrita como una criatura híbrida, asociada con diferentes formas animales: tenía elementos de león, cabra y serpiente, y se distinguía por su capacidad de arrojar fuego.\n\nSu propia naturaleza era una combinación de partes que, aparentemente, no deberían coexistir.\n\nPrecisamente ahí reside una de las características más interesantes del mito: Quimera es una representación de lo compuesto, lo complejo y lo que no puede comprenderse desde una sola perspectiva.\n\nNo era simplemente un animal poderoso. Era una criatura cuya naturaleza exigía reconocer simultáneamente diferentes elementos."
+            },
+            {
+                title: "02. BELEROFONTE.",
+                text: "La figura destinada a enfrentarse con Quimera fue Belerofonte, héroe de la mitología griega.\n\nSegún la tradición, Belerofonte recibió del rey Yóbates de Licia el encargo de matar a la criatura.\n\nLa tarea parecía extraordinariamente difícil.\n\nQuimera no podía enfrentarse como si fuera un enemigo ordinario. Su fuerza, su naturaleza híbrida y su capacidad de lanzar fuego convertían el enfrentamiento en un problema que requería algo más que fuerza física.\n\nBelerofonte contó con una ventaja decisiva: Pegaso, el caballo alado.\n\nMontado sobre Pegaso, pudo aproximarse a Quimera desde una posición que le permitía evitar directamente sus ataques y encontrar una estrategia para derrotarla.\n\nLa tradición relata que Belerofonte utilizó una lanza cuya punta había sido adaptada con plomo. Al enfrentarse a la criatura, el calor de su fuego derritió el metal, que penetró en ella y provocó su muerte.\n\nEl héroe no venció a Quimera simplemente porque fuera más fuerte: la venció porque encontró una forma diferente de abordar el problema."
+            },
+            {
+                title: "03. QUIMERA FRENTE A BELEROFONTE.",
+                text: "El mito puede leerse, más allá de su dimensión narrativa, como el encuentro entre dos fuerzas.\n\nPor un lado:\n\nQUIMERA.\nLa complejidad.\nLa multiplicidad.\nLo desconocido.\nLo aparentemente contradictorio.\nEl problema que no puede reducirse fácilmente a una sola explicación.\n\nPor otro:\n\nBELEROFONTE.\nLa observación.\nLa estrategia.\nLa adaptación.\nLa utilización inteligente de recursos.\nLa capacidad de transformar un problema aparentemente imposible en un problema susceptible de ser resuelto.\n\nY entre ambos:\n\nPEGASO.\nLa herramienta que permite ampliar las capacidades del ser humano.\n\nDesde esta perspectiva, el mito puede resumirse simbólicamente como:\nLa complejidad no siempre se vence mediante mayor fuerza, sino mediante una mejor comprensión del problema y una estrategia adecuada para abordarlo."
+            },
+            {
+                title: "04. ¿POR QUÉ QUIMERA?",
+                text: "El nombre del Instituto nace precisamente de esta imagen.\n\nQuimera representa aquello que resulta complejo, híbrido, multidimensional y difícil de comprender desde una única perspectiva.\n\nLas ciencias contemporáneas presentan constantemente problemas de esta naturaleza.\n\nLa salud, por ejemplo, no pertenece exclusivamente a una disciplina.\nUn mismo problema puede involucrar simultáneamente: biología + medicina + genética + estadística + tecnología + comunicación + lenguaje + comportamiento humano.\n\nIntentar comprenderlo desde una sola perspectiva puede resultar insuficiente.\n\nPor ello, Quimera adopta simbólicamente la criatura mitológica como representación de la complejidad interdisciplinaria.\n\nNo se trata de destruir la complejidad: Se trata de comprenderla."
+            },
+            {
+                title: "05. ¿Y POR QUÉ BELEROFONTE?",
+                text: "Si Quimera representa el problema complejo, Belerofonte representa al ser humano que decide enfrentarlo.\n\nNo mediante la fuerza indiscriminada, sino mediante:\n• Observación.\n• Conocimiento.\n• Estrategia.\n• Adaptación.\n• Uso de herramientas.\n• Razonamiento.\n• Decisión.\n\nPor ello, dentro de la identidad de Quimera, Belerofonte representa la dimensión metodológica del conocimiento.\n\nEl conocimiento permite reconocer el problema.\nLa metodología permite organizarlo.\nEl razonamiento permite analizarlo.\nLas herramientas permiten intervenir sobre él.\nY la evaluación permite determinar si la intervención funcionó."
+            },
+            {
+                title: "06. PEGASO: LA HERRAMIENTA QUE AMPLÍA AL SER HUMANO.",
+                text: "Pegaso ocupa una posición especial dentro de esta interpretación.\n\nBelerofonte necesitaba una herramienta que le permitiera enfrentarse a Quimera desde una perspectiva diferente: Pegaso le proporcionó esa capacidad.\n\nPor ello, dentro de la simbología institucional de Quimera, Pegaso representa la tecnología y las herramientas desarrolladas para ampliar las capacidades humanas.\n\nLa herramienta no sustituye al pensamiento: LO POTENCÍA.\n\nEsta distinción es fundamental: la tecnología puede proporcionar nuevas capacidades para observar, analizar, comunicar o intervenir; pero la responsabilidad de decidir qué hacer con esas capacidades continúa perteneciendo al ser humano."
+            },
+            {
+                title: "07. DE LA MITOLOGÍA A LA MISIÓN.",
+                text: "La mitología detrás de Quimera no pretende convertir una historia antigua en una explicación científica: su función es simbólica.\n\nEl mito proporciona un lenguaje para expresar una idea que permanece vigente: los problemas complejos requieren comprensión, integración, estrategia y herramientas adecuadas.\n\nA partir de esta idea, el Instituto Quimera organiza su actividad alrededor de cuatro funciones fundamentales:\n\nINVESTIGACIÓN · DOCENCIA · SERVICIO · DIVULGACIÓN\n\nCada una representa una etapa diferente de la relación entre el conocimiento y la sociedad."
+            },
+            {
+                title: "08. QUIMERA E INVESTIGACIÓN.",
+                text: "La investigación representa el esfuerzo por comprender a Quimera:\nAntes de intentar resolver un problema complejo es necesario estudiarlo.\n\nInvestigar significa observar, formular preguntas, generar hipótesis, analizar evidencia, identificar relaciones, reconocer incertidumbres y producir nuevo conocimiento.\n\nEn este sentido: la investigación es el proceso mediante el cual Quimera deja de ser solamente un problema y comienza a convertirse en un objeto de estudio y conocimiento.\n\nLa investigación constituye, por tanto, el fundamento intelectual del Instituto."
+            },
+            {
+                title: "09. QUIMERA Y DOCENCIA.",
+                text: "La docencia representa la transferencia estructurada del conocimiento.\nEl conocimiento que no puede enseñarse corre el riesgo de permanecer aislado.\n\nPor ello, Quimera transforma los resultados de la investigación, la experiencia profesional y el desarrollo metodológico en:\n\n• Cursos.\n• Programas educativos.\n• Series pedagógicas.\n• Talleres.\n• Guías.\n• Materiales didácticos.\n• Herramientas de aprendizaje.\n\nLa docencia convierte el conocimiento individual o institucional en capacidad compartida."
+            },
+            {
+                title: "10. QUIMERA Y SERVICIO.",
+                text: "El servicio representa la aplicación del conocimiento.\nComprender un problema y enseñar sobre él, no siempre es suficiente.\nExisten situaciones en las que el conocimiento debe transformarse en una intervención concreta.\n\nLos servicios de Quimera buscan llevar conocimientos, metodologías y herramientas hacia contextos profesionales donde puedan generar utilidad real.\n\nPor ello, el servicio constituye el punto en el que el conocimiento abandona el plano exclusivamente teórico y entra en contacto con la práctica."
+            },
+            {
+                title: "11. QUIMERA Y DIVULGACIÓN.",
+                text: "El conocimiento científico no debe permanecer inaccesible por la forma en que se comunica.\nPor medio de publicaciones, infografías, recursos digitales, materiales educativos y otros medios de comunicación, Quimera busca acercar el conocimiento a diferentes públicos.\n\nLa divulgación representa la transferencia del conocimiento más allá de los espacios especializados.\nDivulgar significa transformar el conocimiento especializado en contenidos comprensibles sin sacrificar su rigor.\n\nLa divulgación constituye, por tanto, un puente entre:\nConocimiento especializado → Comprensión pública."
+            },
+            {
+                title: "12. EL CICLO DE QUIMERA.",
+                text: "Las cuatro funciones no constituyen actividades aisladas, ni procesos independientes.\n\nForman un sistema interdependiente de transformación y retroalimentación que se articula como un ciclo de desarrollo del conocimiento, el cual se deriva del <a onclick=\"startHelicoidalSequence()\">Modelo Helicoidal del Desarrollo del Conocimiento</a> desarrollado por el Dr. Cerezo:\n\n<a onclick=\"openSubModal('ECQ.png')\">EL CICLO DE QUIMERA</a>\nLa INVESTIGACIÓN genera conocimiento.\nLa DOCENCIA transforma conocimiento en capacidad.\nEl SERVICIO transforma la capacidad en experiencia mediante su aplicación en contextos reales.\nLa DIVULGACIÓN transforma el conocimiento especializado enriquecido por la experiencia, en comprensión compartida.\nDe la interacción entre conocimiento, capacidad, experiencia y realidad, emergen nuevas preguntas que impulsan nuevamente a la investigación.\n\nPor ello, el ciclo se eleva, conservando lo aprendido: transforma y amplía el conocimiento, sin cerrar el ciclo."
+            },
+            {
+                title: "13. LA IDENTIDAD SIMBÓLICA DE QUIMERA.",
+                text: "Desde esta perspectiva:\n\nQUIMERA representa la complejidad.\nBELEROFONTE representa al profesional que decide comprenderla y enfrentarla.\nPEGASO representa las herramientas y la tecnología que amplían sus capacidades.\nEL MÉTODO representa la estrategia que permite transformar una situación compleja en un problema susceptible de análisis.\nEL CONOCIMIENTO representa aquello que permite comprender antes de intervenir.\nLA TRANSFERENCIA representa el movimiento del conocimiento hacia la práctica y la sociedad.\nY EL CICLO representa la evolución continua del conocimiento."
+            },
+            {
+                title: "14. EL SIGNIFICADO DEL NOMBRE.",
+                text: "Quimera no toma su nombre porque pretenda reproducir el monstruo de la mitología. Lo toma porque reconoce en él una poderosa metáfora de aquello que pretende estudiar y comprender: la complejidad.\n\nY reconoce en Belerofonte otra metáfora igualmente importante: la capacidad humana de enfrentar la complejidad mediante conocimiento, estrategia, herramientas y decisión responsable.\n\nEntre ambos existe la idea que fundamenta el espíritu de Quimera: no todo problema complejo necesita una respuesta simple. Necesita una respuesta que sea capaz de comprender su complejidad sin perder la claridad necesaria para actuar.\n\nEse es el espíritu detrás de Quimera."
+            }
+        ];
+
+        let currentStep = 0;
+        const centralCard = document.getElementById('central-card');
+        const cardTitleText = document.getElementById('card-title-text');
+        const cardCursor = document.getElementById('card-cursor');
+        
+        const mainModal = document.getElementById('main-modal');
+        const modalWindow = document.getElementById('modal-window');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const modalCursor = document.getElementById('modal-cursor');
+        
+        let isTyping = false;
+        let isCardBusy = true; 
+        let isFinaleReady = false; 
+
+        const typeCardTitle = async (text, speed = 25) => {
+            cardCursor.style.opacity = '1';
+            let currentStr = '';
+            for (let i = 0; i < text.length; i++) {
+                currentStr += text.charAt(i);
+                cardTitleText.innerHTML = currentStr;
+                await new Promise(r => setTimeout(r, speed));
+            }
+        };
+
+        const eraseCardTitle = async (speed = 15) => {
+            cardCursor.style.opacity = '1';
+            let currentStr = cardTitleText.innerHTML;
+            for (let i = currentStr.length; i >= 0; i--) {
+                cardTitleText.innerHTML = currentStr.substring(0, i);
+                await new Promise(r => setTimeout(r, speed));
+            }
+        };
+
+        const typeSection = async (element, text, speed) => {
+            let i = 0;
+            let isTag = false;
+            let currentStr = '';
+            while (i < text.length) {
+                if (!isTyping) break;
+                let char = text.charAt(i);
+                currentStr += char;
+                element.innerHTML = currentStr;
+                element.appendChild(modalCursor);
+                modalCursor.style.opacity = '1';
+
+                if (char === '<') isTag = true;
+                if (char === '>') isTag = false;
+                if (!isTag) await new Promise(r => setTimeout(r, speed));
+                i++;
+            }
+        };
+
+        const typeSubSection = async (element, text, speed, cursorElem) => {
+            let i = 0;
+            let isTag = false;
+            let currentStr = '';
+            while (i < text.length) {
+                if (!isSubTyping) break;
+                let char = text.charAt(i);
+                currentStr += char;
+                element.innerHTML = currentStr;
+                element.appendChild(cursorElem);
+                cursorElem.style.opacity = '1';
+
+                if (char === '<') isTag = true;
+                if (char === '>') isTag = false;
+                if (!isTag) await new Promise(r => setTimeout(r, speed));
+                i++;
+            }
+        };
+
+        const typeHeaderTitle = async () => {
+            const line1Text = "MITOLOGÍA DETRÁS DE";
+            const headerLine1 = document.getElementById('header-line1');
+            const wordQuimera = document.getElementById('word-quimera');
+            const headerCursor = document.getElementById('header-cursor');
+            const letterSpans = wordQuimera.querySelectorAll('.hidden-letter');
+
+            headerCursor.style.opacity = '1';
+
+            let currentStr = '';
+            for (let i = 0; i < line1Text.length; i++) {
+                currentStr += line1Text.charAt(i);
+                headerLine1.innerHTML = currentStr;
+                headerLine1.appendChild(headerCursor);
+                await new Promise(r => setTimeout(r, 30));
+            }
+
+            await new Promise(r => setTimeout(r, 120));
+
+            for (let i = 0; i < letterSpans.length; i++) {
+                letterSpans[i].classList.add('revealed');
+                wordQuimera.insertBefore(headerCursor, letterSpans[i].nextSibling);
+                await new Promise(r => setTimeout(r, 70));
+            }
+
+            headerCursor.style.opacity = '0';
+            setTimeout(() => headerCursor.remove(), 500);
+        };
+
+        centralCard.addEventListener('click', async () => {
+            if (isCardBusy) return;
+            document.body.classList.add('modal-blur-active');
+
+            setTimeout(async () => {
+                mainModal.classList.add('show');
+                modalWindow.classList.remove('tv-off');
+                modalTitle.innerHTML = '';
+                modalBody.innerHTML = '';
+                modalCloseBtn.innerHTML = '';
+                modalCursor.style.opacity = '0';
+                isTyping = true;
+
+                const data = storyData[currentStep];
+                
+                await typeSection(modalTitle, data.title, 20);
+                if (!isTyping) return;
+                await typeSection(modalBody, data.text, 10);
+                if (!isTyping) return;
+                await typeSection(modalCloseBtn, "Cerrar.", 30);
+                
+                if(isTyping) {
+                    modalCursor.style.opacity = '1';
+                    isTyping = false;
+                }
+            }, 300);
+        });
+
+        const triggerTVClose = () => {
+            if (modalWindow.classList.contains('tv-off')) return;
+            isTyping = false; 
+            modalCursor.style.opacity = '0';
+            modalWindow.classList.add('tv-off');
+
+            setTimeout(async () => {
+                mainModal.classList.remove('show');
+                document.body.classList.remove('modal-blur-active');
+                
+                isCardBusy = true;
+                await eraseCardTitle(20);
+                
+                if (currentStep < storyData.length - 1) {
+                    currentStep++;
+                    await typeCardTitle(storyData[currentStep].title, 30);
+                    isCardBusy = false; 
+                } else {
+                    centralCard.classList.add('tv-off-card');
+                    setTimeout(() => {
+                        centralCard.style.display = 'none';
+                        const wordQuimera = document.getElementById('word-quimera');
+                        wordQuimera.classList.add('finale-active');
+                        wordQuimera.classList.add('ready-to-click');
+                        isFinaleReady = true; 
+                    }, 500); 
+                }
+            }, 600);
+        };
+
+        modalCloseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if(!isTyping) triggerTVClose();
+        });
+
+        mainModal.addEventListener('click', (e) => {
+            if (e.target === mainModal && !isTyping) triggerTVClose();
+        });
+
+        const triggerGrandFinale = () => {
+            document.body.classList.add('exit-active');
+            setTimeout(() => { window.location.href = 'https://quimerac3.github.io/QuimeraC3-Q/'; }, 800);
+        };
+
+        const wordQuimeraBtn = document.getElementById('word-quimera');
+        wordQuimeraBtn.addEventListener('click', () => {
+            if (isFinaleReady) {
+                isFinaleReady = false; 
+                wordQuimeraBtn.classList.remove('ready-to-click');
+                wordQuimeraBtn.style.cursor = 'default'; 
+                triggerGrandFinale();
+            }
+        });
+
+        const subModal = document.getElementById('sub-modal');
+        const subImg = document.getElementById('submodal-img');
+        const subModalTextWindow = document.getElementById('submodal-text-window');
+        const subModalXBtn = document.getElementById('submodal-x-btn');
+        const subModalTitle = document.getElementById('sub-modal-title');
+        const subModalBody = document.getElementById('sub-modal-body');
+        const subModalCloseBtn = document.getElementById('sub-modal-close-btn');
+        const subModalCursor = document.getElementById('sub-modal-cursor');
+
+        let isSubTyping = false;
+        let helicoidalSequenceRunning = false;
+
+        window.openSubModal = (imgSrc) => {
+            helicoidalSequenceRunning = false;
+            subModalTextWindow.style.display = 'none';
+            subImg.style.display = 'block';
+            subModalXBtn.style.display = 'block';
+            subImg.style.opacity = '0';
+            subImg.src = imgSrc;
+            subModal.classList.add('show');
+            
+            const triggerFadeIn = () => { setTimeout(() => { subImg.style.opacity = '1'; }, 50); };
+            if (subImg.complete) triggerFadeIn(); else subImg.onload = triggerFadeIn;
+        };
+
+        window.startHelicoidalSequence = async () => {
+            helicoidalSequenceRunning = true;
+            subModalTextWindow.style.display = 'none';
+            subImg.style.display = 'block';
+            subModalXBtn.style.display = 'block';
+            subModal.classList.add('show');
+
+            const images = ['01-borrador_T-P.png', '02-Teoria-Preg.png', '03-HECE.png', '04-MHDC.png'];
+
+            for (let i = 0; i < images.length; i++) {
+                if (!helicoidalSequenceRunning) return;
+                subImg.style.opacity = '0';
+                await new Promise(r => setTimeout(r, 800));
+                
+                if (!helicoidalSequenceRunning) return;
+                subImg.src = images[i];
+                
+                await new Promise(resolve => {
+                    if (subImg.complete) resolve();
+                    else subImg.onload = resolve;
+                });
+                
+                if (!helicoidalSequenceRunning) return;
+                subImg.style.opacity = '1';
+                await new Promise(r => setTimeout(r, 3000));
+
+                if (!helicoidalSequenceRunning) return;
+                if (i === images.length - 1) {
+                    subImg.style.opacity = '0';
+                    await new Promise(r => setTimeout(r, 800));
+                    if (!helicoidalSequenceRunning) return;
+                    showHelicoidalTextWindow();
+                    return;
+                }
+            }
+        };
+
+        const showHelicoidalTextWindow = () => {
+            subImg.style.display = 'none';
+            subModalXBtn.style.display = 'none';
+            subModalTextWindow.style.display = 'block';
+            subModalTextWindow.classList.remove('tv-off');
+            subModalTextWindow.classList.add('tv-on');
+
+            subModalTitle.innerHTML = '';
+            subModalBody.innerHTML = '';
+            subModalCloseBtn.innerHTML = '';
+            subModalCursor.style.opacity = '0';
+            isSubTyping = true;
+
+            const textContent = `Representa el conocimiento como un proceso continuo de transformación. Una teoría o comprensión previa permite interpretar la realidad, pero al enfrentarse con nuevos fenómenos surgen problemas, contradicciones o interrogantes que cuestionan sus límites.
+
+El análisis permite investigar y construir respuestas; la revisión somete esas respuestas a criterios de rigor, coherencia y evidencia; y la transferencia incorpora el nuevo conocimiento a la comprensión existente.
+
+Sin embargo, el proceso no termina con la solución. Cada problema resuelto genera nuevas preguntas, y las nuevas preguntas permiten acceder a problemas de mayor complejidad.
+
+Por ello, el conocimiento no se desarrolla en círculos que regresan al mismo punto, sino mediante una hélice ascendente: cada ciclo conserva, transforma y amplía lo aprendido, conduciendo hacia niveles progresivamente más profundos de comprensión.
+
+Resolver un problema no es el final del conocimiento; es el comienzo de una pregunta mejor.`;
+
+            setTimeout(async () => {
+                await typeSubSection(subModalTitle, "MODELO HELICOIDAL DEL DESARROLLO DEL CONOCIMIENTO.", 20, subModalCursor);
+                if (!isSubTyping) return;
+                await typeSubSection(subModalBody, textContent, 8, subModalCursor);
+                if (!isSubTyping) return;
+                await typeSubSection(subModalCloseBtn, "Cerrar.", 30, subModalCursor);
+                
+                if(isSubTyping) {
+                    subModalCursor.style.opacity = '1';
+                    isSubTyping = false;
+                }
+            }, 500);
+        };
+
+        const triggerHelicoidalTextClose = () => {
+            if (subModalTextWindow.classList.contains('tv-off')) return;
+            isSubTyping = false;
+            subModalCursor.style.opacity = '0';
+            subModalTextWindow.classList.remove('tv-on');
+            subModalTextWindow.classList.add('tv-off');
+
+            setTimeout(() => {
+                subModalTextWindow.style.display = 'none';
+                subModalTextWindow.classList.remove('tv-off');
+                
+                subImg.style.opacity = '0';
+                subImg.src = '04-MHDC.png';
+                subImg.style.display = 'block';
+                subModalXBtn.style.display = 'block';
+                
+                setTimeout(() => { subImg.style.opacity = '1'; }, 50);
+            }, 500);
+        };
+
+        subModalCloseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!isSubTyping) triggerHelicoidalTextClose();
+        });
+
+        window.closeSubModal = () => {
+            helicoidalSequenceRunning = false;
+            isSubTyping = false;
+            subImg.style.opacity = '0';
+            subModal.classList.remove('show');
+            
+            setTimeout(() => {
+                subModalTextWindow.style.display = 'none';
+                subModalTextWindow.classList.remove('tv-off', 'tv-on');
+            }, 500);
+        };
+
+        subModal.addEventListener('click', (e) => {
+            if (e.target === subModal) {
+                if (subModalTextWindow.style.display === 'block') {
+                    if (!isSubTyping) triggerHelicoidalTextClose();
+                } else {
+                    closeSubModal();
+                }
+            }
+        });
+
+        const music = document.getElementById('bg-music');
+        const audioToggle = document.getElementById('audio-toggle');
+        let isMusicPlaying = false;
+
+        audioToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (isMusicPlaying) {
+                music.pause();
+                audioToggle.innerHTML = '<span style="color: #ffffff;">🎵</span> Música: OFF';
+                isMusicPlaying = false;
+            } else {
+                music.play().then(() => {
+                    audioToggle.innerHTML = '<span style="color: #ffffff;">🎶</span> Música: ON';
+                    isMusicPlaying = true;
+                }).catch(error => console.log("Error de audio:", error));
+            }
+        });
+
+        const fullscreenToggle = document.getElementById('fullscreen-toggle');
+        fullscreenToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().then(() => {
+                    fullscreenToggle.textContent = '❌ Salir Pantalla Completa';
+                }).catch(err => console.log("Error Fullscreen:", err));
+            } else {
+                document.exitFullscreen().then(() => {
+                    fullscreenToggle.textContent = '⛶ Pantalla Completa';
+                });
+            }
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            fullscreenToggle.textContent = !document.fullscreenElement ? '⛶ Pantalla Completa' : '❌ Salir Pantalla Completa';
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.getElementById('intro-overlay');
+            
+            setTimeout(() => {
+                document.getElementById('bg-layer').style.opacity = '1';
+                overlay.style.opacity = '0';
+            }, 600);
+
+            setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 1600);
+            
+            setTimeout(() => {
+                const brandLogo = document.querySelector('.brand-logo');
+                const text = brandLogo.dataset.text;
+                let i = 0;
+                function typeBrandLogo() {
+                    if (i <= text.length) {
+                        brandLogo.innerHTML = text.substring(0, i);
+                        i++;
+                        setTimeout(typeBrandLogo, 25);
+                    }
+                }
+                typeBrandLogo();
+            }, 2100);
+
+            setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 2900);
+            
+            setTimeout(async () => { await typeHeaderTitle(); }, 3200);
+
+            setTimeout(async () => {
+                const subP = document.querySelector('header p');
+                await typeSection(subP, subP.dataset.text, 15);
+            }, 4600);
+            
+            setTimeout(() => {
+                centralCard.style.display = 'block';
+                centralCard.classList.add('tv-on-card');
+                
+                setTimeout(async () => {
+                    centralCard.classList.remove('tv-on-card');
+                    await typeCardTitle(storyData[0].title, 30);
+                    isCardBusy = false;
+
+                    document.querySelector('footer').style.opacity = '1';
+
+                    setTimeout(() => {
+                        const footerPs = document.querySelectorAll('footer p');
+                        let pIndex = 0;
+                        function typeFooterP() {
+                            if (pIndex >= footerPs.length) return;
+                            let p = footerPs[pIndex];
+                            let text = p.dataset.text.replace('2026', new Date().getFullYear());
+                            let i = 0;
+                            function typeChar() {
+                                if (i <= text.length) {
+                                    p.innerHTML = text.substring(0, i);
+                                    i++;
+                                    setTimeout(typeChar, 18);
+                                } else {
+                                    pIndex++;
+                                    setTimeout(typeFooterP, 100);
+                                }
+                            }
+                            typeChar();
+                        }
+                        typeFooterP();
+                    }, 400);
+
+                }, 600);
+            }, 5600); 
+        });
+    </script>
+</body>
+</html>
