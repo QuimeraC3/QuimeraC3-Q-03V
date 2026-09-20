@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mitología detrás de Quimera &bull; Ecosistema Científico y Académico</title>
+    <title>VISIÓN DE QUIMERA &bull; Ecosistema Científico y Académico</title>
     <style>
         :root {
             --text-main: #0f172a;
@@ -119,7 +119,7 @@
         .brand-logo {
             color: #ffffff;
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 0.99rem;
+            font-size: clamp(0.85rem, 2vw, 1rem); /* Fluido */
             font-weight: 700;
             text-decoration: none;
             letter-spacing: -0.01em;
@@ -133,15 +133,16 @@
 
         .nav-links {
             display: flex;
-            gap: 1.25rem;
+            gap: clamp(0.5rem, 2vw, 1.25rem); /* Espaciado fluido */
             list-style: none;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
             color: #ffffff;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: clamp(0.75rem, 1.5vw, 0.9rem); /* Fluido */
             font-weight: 500;
             transition: color 0.2s ease;
         }
@@ -173,7 +174,7 @@
             width: 100%;
             margin: 0 auto;
             /* Flecha 01: Padding superior de 10vh para ubicar "VISIÓN" */
-            padding: 08vh 2rem 1rem 2rem;
+            padding: 10vh 2rem 1rem 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -182,7 +183,7 @@
 
         header h1 {
             font-family: Georgia, serif;
-            font-size: 4rem; /* Tamaño base */
+            font-size: clamp(2rem, 6vw, 4rem); /* Fluido */
             font-weight: 700;
             text-transform: uppercase;
             color: #ffffff;
@@ -194,21 +195,22 @@
 
         /* Flecha 02: Separación vertical exacta para la palabra "QUIMERA" */
         .arrow-02-text {
-            margin-top: 18vh;
+            margin-top: clamp(10vh, 15vh, 18vh); /* Fluido en altura */
             margin-bottom: 1rem;
         }
 
         /* PALABRA QUIMERA ELÁSTICA (CLAMP) */
         #word-quimera {
             display: inline-block;
-            /* Crece fluido entre 2.5rem en móviles y 6rem en monitores grandes */
-            font-size: clamp(2.5rem, 10vw, 6rem); 
+            font-size: clamp(2.5rem, 10vw, 6rem); /* Fluido */
             transition: color 0.3s ease;
             line-height: 1.1;
+            -webkit-text-stroke: 1.5px #000000;
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
         }
 
         header p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2.5vw, 1.25rem); /* Fluido */
             color: #e2e8f0;
             margin: 0;
             text-align: center;
@@ -242,11 +244,9 @@
         main {
             flex: 1;
             display: flex;
-            /* Modificado a flex-end para anclar la tarjeta hacia abajo */
             align-items: flex-end; 
             justify-content: center;
-            /* Flecha 03: Padding bottom de 10vh define la coordenada Y final */
-            padding: 2rem 2rem 07vh 2rem; 
+            padding: 2rem 2rem 7vh 2rem; 
             z-index: 10;
             position: relative;
             transition: filter 0.5s ease;
@@ -255,7 +255,7 @@
         .seq-card {
             background-color: #ffffff;
             border-radius: 12px;
-            padding: 2rem 3rem;
+            padding: clamp(1.5rem, 4vw, 2rem) clamp(1.5rem, 5vw, 3rem); /* Fluido */
             box-shadow: var(--shadow-lg);
             cursor: pointer;
             text-align: center;
@@ -268,7 +268,7 @@
 
         .seq-card h2 {
             font-family: Georgia, serif;
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 3.5vw, 1.6rem); /* Fluido */
             color: var(--accent);
             text-transform: uppercase;
             min-height: 2.2rem;
@@ -324,7 +324,7 @@
 
         .modal-window, .submodal-text-window {
             background: #ffffff;
-            padding: 3rem;
+            padding: clamp(1.5rem, 5vw, 3rem); /* Fluido */
             border-radius: 12px;
             max-width: 700px;
             width: 90%;
@@ -360,7 +360,7 @@
         .modal-title {
             font-family: Georgia, serif;
             color: var(--accent);
-            font-size: 1.8rem;
+            font-size: clamp(1.4rem, 4vw, 2rem); /* Fluido */
             text-transform: uppercase;
             margin-bottom: 1.5rem;
             border-bottom: 1px solid rgba(200,139,50,0.3);
@@ -370,7 +370,7 @@
         }
 
         .modal-body {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2.2vw, 1.15rem); /* Fluido */
             color: var(--text-main);
             line-height: 1.8;
             margin-bottom: 2rem;
@@ -389,7 +389,7 @@
 
         .modal-close-wrapper {
             text-align: right;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem); /* Fluido */
             font-weight: bold;
             min-height: 2rem;
         }
@@ -406,7 +406,7 @@
         .cursor {
             display: inline-block;
             width: 8px;
-            height: 1.2rem;
+            height: clamp(1rem, 2.5vw, 1.2rem); /* Fluido */
             background-color: var(--accent);
             vertical-align: text-bottom;
             animation: blink 1s step-end infinite;
@@ -440,7 +440,7 @@
             position: absolute;
             top: -40px; right: -40px;
             color: var(--accent);
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 6vw, 3rem); /* Fluido */
             cursor: pointer;
             font-weight: bold;
             transition: transform 0.3s;
@@ -456,24 +456,27 @@
             background-color: rgba(11, 19, 41, 0.2);
             backdrop-filter: blur(8px);
             color: #ffffff;
-            font-size: 0.8rem;
+            font-size: clamp(0.75rem, 1.5vw, 0.9rem); /* Fluido */
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 100;
             transition: filter 0.5s ease;
         }
 
-        /* MEDIA QUERIES PARA MÓVILES (SEGURIDAD RESPONSIVA) */
+        /* MEDIA QUERIES PARA MÓVILES (Reposicionamiento estructural, no de fuente gracias a Clamp) */
         @media (max-width: 768px) {
-            header h1 { font-size: 1.5rem; }
-            header p { font-size: 1rem; }
-            .seq-card, .modal-window, .submodal-text-window { padding: 1.5rem; }
-            .modal-title { font-size: 1.4rem; }
-            .modal-body { font-size: 1rem; }
-            /* Reposicionar la X para que no se salga de pantallas táctiles estrechas */
-            .submodal-close { top: -15px; right: 0px; font-size: 2rem; text-shadow: 0 0 10px #000; }
-            .top-bar { flex-direction: column; gap: 0.5rem; }
+            .submodal-close { 
+                top: -15px; 
+                right: 0px; 
+                text-shadow: 0 0 10px #000; 
+            }
+            .top-bar { 
+                flex-direction: column; 
+                gap: 0.5rem; 
+            }
+            .nav-links {
+                justify-content: center;
+            }
         }
-
     </style>
 </head>
 <body>
@@ -493,12 +496,10 @@
     </nav>
 
     <header>
-        <!-- Flecha 01: MITOLOGÍA DETRÁS DE -->
         <h1>
             <span id="header-line1"></span>
         </h1>
         
-        <!-- Flecha 02: QUIMERA (Separada para permitir precisión cartesiana) -->
         <h1 class="arrow-02-text">
             <span id="word-quimera">
                 <span style="--i:1" class="hidden-letter">Q</span><span style="--i:2" class="hidden-letter">U</span><span style="--i:3" class="hidden-letter">I</span><span style="--i:4" class="hidden-letter">M</span><span style="--i:5" class="hidden-letter">E</span><span style="--i:6" class="hidden-letter">R</span><span style="--i:7" class="hidden-letter">A</span>
@@ -508,7 +509,6 @@
     </header>
 
     <main>
-        <!-- Flecha 03: Recuadro posicionado al fondo -->
         <div id="central-card" class="seq-card">
             <h2><span id="card-title-text"></span><span class="cursor" id="card-cursor"></span></h2>
         </div>
