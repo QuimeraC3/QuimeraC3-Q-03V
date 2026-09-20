@@ -59,18 +59,18 @@
             transition: opacity 1000ms ease, filter 0.5s ease;
         }
 
-        /* Capa intro negra */
+        /* Capa intro (Inicia en blanco y transiciona) */
         #intro-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #000000;
+            background: #ffffff;
             z-index: 9999;
             pointer-events: none;
             opacity: 1;
-            transition: opacity 1000ms ease;
+            transition: background-color 800ms ease, opacity 1000ms ease;
         }
 
         /* Gran Final a blanco */
@@ -462,7 +462,7 @@
             transition: filter 0.5s ease;
         }
 
-        /* MEDIA QUERIES PARA MÓVILES (Reposicionamiento estructural, no de fuente gracias a Clamp) */
+        /* MEDIA QUERIES PARA MÓVILES */
         @media (max-width: 768px) {
             .submodal-close { 
                 top: -15px; 
@@ -1033,12 +1033,18 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
         window.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('intro-overlay');
             
+            // Inicia el desvanecimiento del blanco hacia el negro
+            setTimeout(() => {
+                overlay.style.backgroundColor = '#000000';
+            }, 100);
+
+            // Transiciones desplazadas +400ms para mantenerlas intactas
             setTimeout(() => {
                 document.getElementById('bg-layer').style.opacity = '1';
                 overlay.style.opacity = '0';
-            }, 600);
+            }, 1000);
 
-            setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 1600);
+            setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 2000);
             
             setTimeout(() => {
                 const brandLogo = document.querySelector('.brand-logo');
@@ -1052,16 +1058,16 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
                     }
                 }
                 typeBrandLogo();
-            }, 2100);
+            }, 2500);
 
-            setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 2900);
+            setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 3300);
             
-            setTimeout(async () => { await typeHeaderTitle(); }, 3200);
+            setTimeout(async () => { await typeHeaderTitle(); }, 3600);
 
             setTimeout(async () => {
                 const subP = document.querySelector('header p');
                 await typeSection(subP, subP.dataset.text, 15);
-            }, 4600);
+            }, 5000);
             
             setTimeout(() => {
                 centralCard.style.display = 'block';
@@ -1098,7 +1104,7 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
                     }, 400);
 
                 }, 600);
-            }, 5600); 
+            }, 6000); 
         });
     </script>
 </body>
