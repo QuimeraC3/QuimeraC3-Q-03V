@@ -553,62 +553,96 @@
         const imageList = ['01-borrador_T-P.png', '02-Teoria-Preg.png', '03-HECE.png', '04-MHDC.png', 'ECQ.png'];
         imageList.forEach(src => { const img = new Image(); img.src = src; });
 
+        // NUEVA ESTRUCTURA BASADA EN BLOQUES (CONTENT)
         const storyData = [
             {
                 title: "01. EL FUTURO QUE BUSCAMOS CONSTRUIR.",
-                text: "Quimera aspira a consolidarse como un ecosistema científico, académico y profesional capaz de conectar conocimiento, disciplinas, personas, metodologías y tecnología para abordar problemas complejos y convertirlos en oportunidades de desarrollo.\n\nNo buscamos únicamente crecer:\nBuscamos evolucionar.\n\nEvolucionar en la manera de investigar, aprender, enseñar, comunicar, desarrollar herramientas, resolver problemas y transferir conocimiento.\n\nNuestra visión parte de una convicción:\nEl futuro del conocimiento no depende solamente de cuánto sabemos, sino de nuestra capacidad para conectar aquello que sabemos."
+                content: [
+                    { type: 'p', text: "Quimera aspira a consolidarse como un ecosistema científico, académico y profesional capaz de conectar conocimiento, disciplinas, personas, metodologías y tecnología para abordar problemas complejos y convertirlos en oportunidades de desarrollo." },
+                    { type: 'p', text: "No buscamos únicamente crecer:\nBuscamos evolucionar." },
+                    { type: 'p', text: "Evolucionar en la manera de investigar, aprender, enseñar, comunicar, desarrollar herramientas, resolver problemas y transferir conocimiento." },
+                    { type: 'p', text: "Nuestra visión parte de una convicción:\nEl futuro del conocimiento no depende solamente de cuánto sabemos, sino de nuestra capacidad para conectar aquello que sabemos." }
+                ]
             },
             {
                 title: "02. HACIA DÓNDE VAMOS.",
-                text: "Quimera se dirige hacia un modelo en el que:\nEl conocimiento pueda conectarse.\n\nBuscamos construir puentes entre disciplinas, especialidades y áreas de conocimiento que frecuentemente se desarrollan de manera aislada.\n\nLa medicina puede dialogar con las ciencias del lenguaje.\nLa investigación puede dialogar con la educación.\nLa tecnología puede ampliar las capacidades humanas.\nLa experiencia profesional puede retroalimentar a la investigación.\n\nY cada conexión puede generar nuevas posibilidades de conocimiento."
+                content: [
+                    { type: 'p', text: "Quimera se dirige hacia un modelo en el que:\nEl conocimiento pueda conectarse." },
+                    { type: 'p', text: "Buscamos construir puentes entre disciplinas, especialidades y áreas de conocimiento que frecuentemente se desarrollan de manera aislada." },
+                    { type: 'p', text: "La medicina puede dialogar con las ciencias del lenguaje.\nLa investigación puede dialogar con la educación.\nLa tecnología puede ampliar las capacidades humanas.\nLa experiencia profesional puede retroalimentar a la investigación." },
+                    { type: 'p', text: "Y cada conexión puede generar nuevas posibilidades de conocimiento." }
+                ]
             },
             {
                 title: "03. LA COMPLEJIDAD PUEDE ABORDARSE METODOLÓGICAMENTE.",
-                text: "Los problemas complejos no desaparecen al simplificarlos.\n\nPor ello, aspiramos a desarrollar y utilizar metodologías capaces de descomponer, relacionar, analizar, evaluar e integrar los diferentes elementos de un problema sin perder de vista el sistema al que pertenecen.\n\nQueremos que la complejidad deje de representar únicamente una dificultad y se convierta también en un punto de partida para generar mejores preguntas y mejores soluciones."
+                content: [
+                    { type: 'p', text: "Los problemas complejos no desaparecen al simplificarlos." },
+                    { type: 'p', text: "Por ello, aspiramos a desarrollar y utilizar metodologías capaces de descomponer, relacionar, analizar, evaluar e integrar los diferentes elementos de un problema sin perder de vista el sistema al que pertenecen." },
+                    { type: 'p', text: "Queremos que la complejidad deje de representar únicamente una dificultad y se convierta también en un punto de partida para generar mejores preguntas y mejores soluciones." }
+                ]
             },
             {
                 title: "04. EL CONOCIMIENTO PUEDE CONVERTIRSE EN CAPACIDAD.",
-                text: "Aspiramos a que la investigación no termine en una publicación, que la formación no termine en una certificación y que una herramienta no termine en su desarrollo.\n\nBuscamos construir procesos en los que:\n\nCONOCIMIENTO → COMPRENSIÓN → CAPACIDAD → APLICACIÓN → EXPERIENCIA → NUEVO CONOCIMIENTO\n\nDe esta manera, cada aprendizaje puede convertirse en una posibilidad de acción y cada experiencia puede retroalimentar el conocimiento."
+                content: [
+                    { type: 'p', text: "Aspiramos a que la investigación no termine en una publicación, que la formación no termine en una certificación y que una herramienta no termine en su desarrollo." },
+                    { type: 'p', text: "Buscamos construir procesos en los que:" },
+                    { type: 'flow', text: "CONOCIMIENTO → COMPRENSIÓN → CAPACIDAD → APLICACIÓN → EXPERIENCIA → NUEVO CONOCIMIENTO" },
+                    { type: 'p', text: "De esta manera, cada aprendizaje puede convertirse en una posibilidad de acción y cada experiencia puede retroalimentar el conocimiento." }
+                ]
             },
             {
                 title: "05. LA TECNOLOGÍA AMPLIFICARÁ LAS CAPACIDADES HUMANAS.",
-                text: "Quimera reconoce la tecnología como una herramienta para ampliar las posibilidades de investigación, aprendizaje, comunicación, análisis y transferencia.\n\nLa tecnología no sustituye el pensamiento:\nLo amplifica cuando se encuentra integrada dentro de un propósito, una metodología y un criterio humano responsable.\n\nPor ello, aspiramos a desarrollar sistemas y herramientas que permitan conectar conocimiento y capacidad humana con nuevas posibilidades tecnológicas."
+                content: [
+                    { type: 'p', text: "Quimera reconoce la tecnología como una herramienta para ampliar las posibilidades de investigación, aprendizaje, comunicación, análisis y transferencia." },
+                    { type: 'p', text: "La tecnología no sustituye el pensamiento:\nLo amplifica cuando se encuentra integrada dentro de un propósito, una metodología y un criterio humano responsable." },
+                    { type: 'p', text: "Por ello, aspiramos a desarrollar sistemas y herramientas que permitan conectar conocimiento y capacidad humana con nuevas posibilidades tecnológicas." }
+                ]
             },
             {
                 title: "06. EL CONOCIMIENTO TRASCENDERÁ SU LUGAR DE ORIGEN.",
-                text: "Queremos que el conocimiento desarrollado en un proyecto pueda convertirse en aprendizaje para otra persona, herramienta para otro profesional, solución para otro problema o punto de partida para una nueva investigación.\n\nLa transferencia será, por tanto, una parte esencial de nuestro crecimiento.\n\nLo que aprendemos no termina en nosotros."
+                content: [
+                    { type: 'p', text: "Queremos que el conocimiento desarrollado en un proyecto pueda convertirse en aprendizaje para otra persona, herramienta para otro profesional, solución para otro problema o punto de partida para una nueva investigación." },
+                    { type: 'p', text: "La transferencia será, por tanto, una parte esencial de nuestro crecimiento." },
+                    { type: 'p', text: "Lo que aprendemos no termina en nosotros." }
+                ]
             },
             {
                 title: "07. LA VISIÓN DE QUIMERA.",
-                text: "A largo plazo, aspiramos a construir una institución capaz de integrar de manera dinámica:\n\nINVESTIGACIÓN: Para generar conocimiento.\nDOCENCIA: Para desarrollar capacidad.\nSERVICIO: Para transformar conocimiento en práctica.\nDIVULGACIÓN: Para compartirlo y hacerlo accesible.\nTECNOLOGÍA: Para conectar y potenciar todo el sistema.\n\nEstas funciones no representan destinos independientes.\nForman parte de un mismo proceso evolutivo."
+                content: [
+                    { type: 'p', text: "A largo plazo, aspiramos a construir una institución capaz de integrar de manera dinámica:" },
+                    { type: 'p', text: "INVESTIGACIÓN: Para generar conocimiento.\nDOCENCIA: Para desarrollar capacidad.\nSERVICIO: Para transformar conocimiento en práctica.\nDIVULGACIÓN: Para compartirlo y hacerlo accesible.\nTECNOLOGÍA: Para conectar y potenciar todo el sistema." },
+                    { type: 'p', text: "Estas funciones no representan destinos independientes.\nForman parte de un mismo proceso evolutivo." }
+                ]
             },
             {
                 title: "08. EL HORIZONTE.",
-                text: "Quimera no pretende construir una estructura estática.\nPretende construir un sistema capaz de aprender de sí mismo.\n\nUn sistema donde:\n\nCada investigación pueda generar enseñanza.\nCada enseñanza pueda generar capacidad.\nCada capacidad pueda producir experiencia.\nCada experiencia pueda generar nuevas preguntas.\nY donde esas nuevas preguntas vuelvan a alimentar la investigación.\n\nPor eso nuestra visión no puede expresarse únicamente como un punto de llegada.\n\nEs un horizonte en movimiento."
+                content: [
+                    { type: 'p', text: "Quimera no pretende construir una estructura estática.\nPretende construir un sistema capaz de aprender de sí mismo." },
+                    { type: 'p', text: "Un sistema donde:\n\nCada investigación pueda generar enseñanza.\nCada enseñanza pueda generar capacidad.\nCada capacidad pueda producir experiencia.\nCada experiencia pueda generar nuevas preguntas.\nY donde esas nuevas preguntas vuelvan a alimentar la investigación." },
+                    { type: 'p', text: "Por eso nuestra visión no puede expresarse únicamente como un punto de llegada." },
+                    { type: 'p', text: "Es un horizonte en movimiento." }
+                ]
             },
             {
                 title: "09. HACIA UNA NUEVA FORMA DE DESARROLLAR CONOCIMIENTO.",
-                text: "Visualizamos un futuro en el que Quimera pueda convertirse en un espacio donde converjan:\n\nPersonas que preguntan.\nPersonas que investigan.\nPersonas que enseñan\nPersonas que desarrollan.\nPersonas que aplican.\nPersonas que comunican.\nPersonas que conectan conocimiento.\n\nPorque los grandes problemas, difícilmente encuentran respuesta dentro de una sola disciplina.\nLas respuestas aparecen cuando somos capaces de conectar perspectivas sin perder el rigor de cada una."
+                content: [
+                    { type: 'p', text: "Visualizamos un futuro en el que Quimera pueda convertirse en un espacio donde converjan:" },
+                    { type: 'p', text: "Personas que preguntan.\nPersonas que investigan.\nPersonas que enseñan\nPersonas que desarrollan.\nPersonas que aplican.\nPersonas que comunican.\nPersonas que conectan conocimiento." },
+                    { type: 'p', text: "Porque los grandes problemas, difícilmente encuentran respuesta dentro de una sola disciplina.\nLas respuestas aparecen cuando somos capaces de conectar perspectivas sin perder el rigor de cada una." }
+                ]
             },
             {
                 title: "10. NUESTRA VISIÓN EN UNA SOLA FRASE.",
-                text: "Construir un ecosistema capaz de conectar conocimiento, metodología, personas y tecnología para comprender la complejidad, desarrollar capacidades y transformar el conocimiento en soluciones que puedan trascender su origen."
+                content: [
+                    { type: 'p', text: "Construir un ecosistema capaz de conectar conocimiento, metodología, personas y tecnología para comprender la complejidad, desarrollar capacidades y transformar el conocimiento en soluciones que puedan trascender su origen." }
+                ]
             },
             {
                 title: "11. HACIA ESTO VAMOS.",
-                text: "De la información al conocimiento.\nDel conocimiento a la comprensión.\nDe la comprensión a la capacidad.\nDe la capacidad a la experiencia.\nDe la experiencia a nuevas preguntas...\n\nY de cada nueva pregunta, hacia un conocimiento más complejo, más conectado y más útil."
-            },
-            {
-                title: "12. EL CICLO DE QUIMERA.",
-                text: "Las cuatro funciones no constituyen actividades aisladas, ni procesos independientes.\n\nForman un sistema interdependiente de transformación y retroalimentación que se articula como un ciclo de desarrollo del conocimiento, el cual se deriva del <a onclick=\"startHelicoidalSequence()\">Modelo Helicoidal del Desarrollo del Conocimiento</a> desarrollado por el Dr. Cerezo:\n\n<a onclick=\"openSubModal('ECQ.png')\">EL CICLO DE QUIMERA</a>\nLa INVESTIGACIÓN genera conocimiento.\nLa DOCENCIA transforma conocimiento en capacidad.\nEl SERVICIO transforma la capacidad en experiencia mediante su aplicación en contextos reales.\nLa DIVULGACIÓN transforma el conocimiento especializado enriquecido por la experiencia, en comprensión compartida.\nDe la interacción entre conocimiento, capacidad, experiencia y realidad, emergen nuevas preguntas que impulsan nuevamente a la investigación.\n\nPor ello, el ciclo se eleva, conservando lo aprendido: transforma y amplía el conocimiento, sin cerrar el ciclo."
-            },
-            {
-                title: "13. LA IDENTIDAD SIMBÓLICA DE QUIMERA.",
-                text: "Desde esta perspectiva:\n\nQUIMERA representa la complejidad.\nBELEROFONTE representa al profesional que decide comprenderla y enfrentarla.\nPEGASO representa las herramientas y la tecnología que amplían sus capacidades.\nEL MÉTODO representa la estrategia que permite transformar una situación compleja en un problema susceptible de análisis.\nEL CONOCIMIENTO representa aquello que permite comprender antes de intervenir.\nLA TRANSFERENCIA representa el movimiento del conocimiento hacia la práctica y la sociedad.\nY EL CICLO representa la evolución continua del conocimiento."
-            },
-            {
-                title: "14. EL SIGNIFICADO DEL NOMBRE.",
-                text: "Quimera no toma su nombre porque pretenda reproducir el monstruo de la mitología. Lo toma porque reconoce en él una poderosa metáfora de aquello que pretende estudiar y comprender: la complejidad.\n\nY reconoce en Belerofonte otra metáfora igualmente importante: la capacidad humana de enfrentar la complejidad mediante conocimiento, estrategia, herramientas y decisión responsable.\n\nEntre ambos existe la idea que fundamenta el espíritu de Quimera: no todo problema complejo necesita una respuesta simple. Necesita una respuesta que sea capaz de comprender su complejidad sin perder la claridad necesaria para actuar.\n\nEse es el espíritu detrás de Quimera."
+                content: [
+                    { type: 'p', text: "De la información al conocimiento.\nDel conocimiento a la comprensión.\nDe la comprensión a la capacidad.\nDe la capacidad a la experiencia.\nDe la experiencia a nuevas preguntas..." },
+                    { type: 'p', text: "Y de cada nueva pregunta, hacia un conocimiento más complejo, más conectado y más útil." }
+                ]
             }
         ];
 
@@ -731,7 +765,25 @@
                 
                 await typeSection(modalTitle, data.title, 20);
                 if (!isTyping) return;
-                await typeSection(modalBody, data.text, 10);
+                
+                // Lógica adaptada para iterar sobre la estructura de bloques
+                for (let block of data.content) {
+                    if (!isTyping) break;
+                    
+                    const blockElem = document.createElement(block.type === 'flow' ? 'div' : 'p');
+                    if (block.type === 'flow') {
+                        blockElem.style.color = 'var(--accent)';
+                        blockElem.style.fontWeight = 'bold';
+                        blockElem.style.textAlign = 'center';
+                        blockElem.style.margin = '1.5rem 0';
+                    } else {
+                        blockElem.style.marginBottom = '1rem';
+                    }
+                    
+                    modalBody.appendChild(blockElem);
+                    await typeSection(blockElem, block.text, 10);
+                }
+
                 if (!isTyping) return;
                 await typeSection(modalCloseBtn, "Cerrar.", 30);
                 
