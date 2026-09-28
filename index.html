@@ -673,6 +673,7 @@
             },
             {
                 title: "NUESTRA VISIÓN EN UNA SOLA FRASE.",
+                align: "center",
                 content: [
                     { type: 'p', text: "CONSTRUIR UN ECOSISTEMA CAPAZ DE CONECTAR CONOCIMIENTO, METODOLOGÍA, PERSONAS Y TECNOLOGÍA PARA COMPRENDER LA COMPLEJIDAD, DESARROLLAR CAPACIDADES Y TRANSFORMAR EL CONOCIMIENTO EN SOLUCIONES QUE PUEDAN TRANSCENDER SU ORIGEN." }
                 ]
@@ -930,6 +931,9 @@
                 isTyping = true;
 
                 const data = storyData[currentStep];
+                
+                // Alineación personalizada según el bloque
+                modalBody.style.textAlign = data.align || 'left';
                 
                 await typeSection(modalTitle, data.title, 20);
                 if (!isTyping) return;
