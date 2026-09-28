@@ -89,7 +89,7 @@
             transition: opacity 1.2s ease !important;
         }
 
-        /* Capa intro (Inicia en blanco y transiciona) */
+        /* Capa intro y gran final a blanco perfeccionado */
         #intro-overlay {
             position: fixed;
             top: 0;
@@ -100,7 +100,7 @@
             z-index: 9999;
             pointer-events: none;
             opacity: 1;
-            transition: background-color 800ms ease, opacity 1000ms ease;
+            transition: background-color 1200ms ease-in-out, opacity 1200ms ease-in-out;
         }
 
         /* Gran Final a blanco */
@@ -119,7 +119,7 @@
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             pointer-events: auto;
-            transition: opacity 800ms ease, background-color 800ms ease, backdrop-filter 800ms ease;
+            transition: opacity 1400ms ease-in-out, background-color 1400ms ease-in-out, backdrop-filter 1400ms ease-in-out;
         }
 
         /* Navegación Top Bar */
@@ -839,9 +839,10 @@
                 overlay.style.background = '#ffffff';
                 overlay.style.opacity = '1';
 
+                // Tiempo ampliado a 1500ms para asegurar un fundido cinemático y progresivo
                 setTimeout(() => {
                     window.location.href = "https://quimerac3.github.io/QuimeraC3-Q/";
-                }, 1000);
+                }, 1500);
             };
         }
 
@@ -1231,9 +1232,11 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
                 const overlay = document.getElementById('intro-overlay');
                 overlay.style.background = '#ffffff';
                 overlay.style.opacity = '1';
+                
+                // Ampliado de 500ms a 1200ms
                 setTimeout(() => {
                     window.location.href = "https://quimerac3.github.io/";
-                }, 500);
+                }, 1200);
             });
 
             setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 3300);
