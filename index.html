@@ -33,6 +33,11 @@
             display: flex;
             flex-direction: column;
             background-color: #000000;
+            transition: filter 1s ease;
+        }
+
+        body.blurring {
+            filter: blur(12px);
         }
 
         /* Transición de desenfoque general */
@@ -62,6 +67,26 @@
             background-attachment: fixed;
             opacity: 0;
             transition: opacity 1000ms ease, filter 0.5s ease;
+        }
+
+        /* Canvas para Lluvia de Código Matrix */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        /* Clase de desvanecimiento a negro para elementos de la interfaz */
+        .fade-out-element {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transition: opacity 1.2s ease !important;
         }
 
         /* Capa intro (Inicia en blanco y transiciona) */
@@ -236,24 +261,10 @@
         .hidden-letter {
             opacity: 0;
             display: inline-block;
+            transition: color 0.4s ease;
         }
         .hidden-letter.revealed {
             opacity: 1;
-        }
-
-        #word-quimera.ready-to-click, #word-quimera.finale-active {
-            cursor: pointer;
-        }
-
-        #word-quimera.finale-active span {
-            display: inline-block;
-            animation: finaleSweep 2s infinite;
-            animation-delay: calc(var(--i) * 0.1s);
-        }
-
-        @keyframes finaleSweep {
-            0%, 37.5%, 50%, 87.5%, 100% { color: #ffffff; }
-            12.5%, 25%, 62.5%, 75% { color: var(--accent); }
         }
 
         /* TARJETA CENTRAL */
@@ -529,6 +540,8 @@
 
     <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
     <div id="bg-layer"></div>
+    <!-- Canvas para la Lluvia Matrix -->
+    <canvas id="matrix-canvas"></canvas>
     <div id="intro-overlay"></div>
 
     <nav class="top-bar">
@@ -702,7 +715,135 @@
         
         let isTyping = false;
         let isCardBusy = true; 
-        let isFinaleReady = false; 
+
+        // Generador del Código Matrix Dorado
+        let matrixInterval = null;
+        function startMatrixRain() {
+            const canvas = document.getElementById('matrix-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZカタカナアアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            const fontSize = 16;
+            let columns = Math.floor(canvas.width / fontSize);
+            let drops = Array(columns).fill(1);
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.font = fontSize + 'px monospace';
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = chars.charAt(Math.floor(Math.random() * chars.length));
+
+                    if (Math.random() > 0.88) {
+                        ctx.fillStyle = '#fffbeb'; // Brillo inicial de la gota
+                    } else {
+                        ctx.fillStyle = '#c88b32'; // Dorado / cobre principal
+                    }
+
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            if (matrixInterval) clearInterval(matrixInterval);
+            matrixInterval = setInterval(draw, 33);
+        }
+
+        // Función para desvanecer elementos e iniciar la lluvia Matrix (copiado de indexQE)
+        function triggerMatrixAndFadeElements() {
+            const bgLayer = document.getElementById('bg-layer');
+            if (bgLayer) bgLayer.style.opacity = '0';
+
+            const elementsToFade = [
+                document.getElementById('header-line1'),
+                document.querySelector('header p'),
+                document.querySelector('.top-bar'),
+                document.getElementById('central-card'),
+                document.querySelector('footer')
+            ];
+
+            elementsToFade.forEach(el => {
+                if (el) el.classList.add('fade-out-element');
+            });
+
+            startMatrixRain();
+            const canvas = document.getElementById('matrix-canvas');
+            if (canvas) canvas.style.opacity = '1';
+        }
+
+        let globalColorInterval = null;
+
+        // Función para activar el hipervínculo final con animación de color en la palabra QUIMERA (copiado de indexQE)
+        function enableFinalHyperlink() {
+            const wordContainer = document.getElementById('word-quimera');
+            const letters = wordContainer.querySelectorAll('span');
+            wordContainer.style.cursor = 'pointer';
+
+            const stepTime = 120;
+
+            function runSequence() {
+                let i = 0;
+                function turnCopperGold(callback) {
+                    if (i < letters.length) {
+                        letters[i].style.color = '#c88b32';
+                        i++;
+                        globalColorInterval = setTimeout(() => turnCopperGold(callback), stepTime);
+                    } else if (callback) {
+                        callback();
+                    }
+                }
+
+                let j = 0;
+                function turnWhite(callback) {
+                    if (j < letters.length) {
+                        letters[j].style.color = '#ffffff';
+                        j++;
+                        globalColorInterval = setTimeout(() => turnWhite(callback), stepTime);
+                    } else if (callback) {
+                        callback();
+                    }
+                }
+
+                turnCopperGold(() => {
+                    i = 0;
+                    turnWhite(() => {
+                        j = 0;
+                        globalColorInterval = setTimeout(runSequence, 0);
+                    });
+                });
+            }
+
+            runSequence();
+
+            wordContainer.onclick = () => {
+                clearTimeout(globalColorInterval);
+
+                document.body.classList.add('blurring');
+                document.body.classList.add('exit-active');
+
+                const overlay = document.getElementById('intro-overlay');
+                overlay.style.background = '#ffffff';
+                overlay.style.opacity = '1';
+
+                setTimeout(() => {
+                    window.location.href = "https://quimerac3.github.io/QuimeraC3-Q/";
+                }, 1000);
+            };
+        }
 
         const typeCardTitle = async (text, speed = 25) => {
             cardCursor.style.opacity = '1';
@@ -792,6 +933,12 @@
 
         centralCard.addEventListener('click', async () => {
             if (isCardBusy) return;
+
+            // Al seleccionar el recuadro cuando contiene "HACIA ESTO VAMOS."
+            if (currentStep === storyData.length - 1) {
+                triggerMatrixAndFadeElements();
+            }
+
             document.body.classList.add('modal-blur-active');
 
             setTimeout(async () => {
@@ -844,9 +991,9 @@
                 document.body.classList.remove('modal-blur-active');
                 
                 isCardBusy = true;
-                await eraseCardTitle(20);
                 
                 if (currentStep < storyData.length - 1) {
+                    await eraseCardTitle(20);
                     currentStep++;
                     await typeCardTitle(storyData[currentStep].title, 30);
                     isCardBusy = false; 
@@ -854,10 +1001,7 @@
                     centralCard.classList.add('tv-off-card');
                     setTimeout(() => {
                         centralCard.style.display = 'none';
-                        const wordQuimera = document.getElementById('word-quimera');
-                        wordQuimera.classList.add('finale-active');
-                        wordQuimera.classList.add('ready-to-click');
-                        isFinaleReady = true; 
+                        enableFinalHyperlink();
                     }, 500); 
                 }
             }, 600);
@@ -870,21 +1014,6 @@
 
         mainModal.addEventListener('click', (e) => {
             if (e.target === mainModal && !isTyping) triggerTVClose();
-        });
-
-        const triggerGrandFinale = () => {
-            document.body.classList.add('exit-active');
-            setTimeout(() => { window.location.href = 'https://quimerac3.github.io/QuimeraC3-Q/'; }, 800);
-        };
-
-        const wordQuimeraBtn = document.getElementById('word-quimera');
-        wordQuimeraBtn.addEventListener('click', () => {
-            if (isFinaleReady) {
-                isFinaleReady = false; 
-                wordQuimeraBtn.classList.remove('ready-to-click');
-                wordQuimeraBtn.style.cursor = 'default'; 
-                triggerGrandFinale();
-            }
         });
 
         const subModal = document.getElementById('sub-modal');
@@ -1096,6 +1225,16 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
                 }
                 typeBrandLogo();
             }, 2500);
+
+            document.querySelector('.brand-logo').addEventListener('click', (e) => {
+                e.preventDefault();
+                const overlay = document.getElementById('intro-overlay');
+                overlay.style.background = '#ffffff';
+                overlay.style.opacity = '1';
+                setTimeout(() => {
+                    window.location.href = "https://quimerac3.github.io/";
+                }, 500);
+            });
 
             setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 3300);
             
