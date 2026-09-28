@@ -277,6 +277,7 @@
             color: var(--accent);
             text-transform: uppercase;
             min-height: 2.2rem;
+            -webkit-text-stroke: 0.5px #000000; /* Delineado negro de 0.5px solo para la tarjeta blanca */
         }
 
         .seq-card:hover { transform: translateY(20px) scale(1.05); }
@@ -413,7 +414,7 @@
         .modal-close-btn {
             color: var(--accent);
             cursor: pointer;
-            text-decoration: none;
+            text-decoration: underline; /* Subrayado para la palabra 'Cerrar.' en los modales */
             transition: color 0.3s ease;
         }
 
