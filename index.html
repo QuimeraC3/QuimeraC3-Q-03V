@@ -10,10 +10,8 @@
             --primary: #0f766e;
             --accent: #c88b32; /* Cobre Dorado */
             --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
-            /* Sombra de modal actualizada */
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
             
-            /* Nuevas variables para modales */
             --card-bg: rgba(15, 23, 42, 0.90);
             --card-border: rgba(255, 255, 255, 0.15);
         }
@@ -89,7 +87,7 @@
             transition: opacity 1.2s ease !important;
         }
 
-        /* Capa intro y gran final a blanco perfeccionado */
+        /* Capa intro y gran final a blanco */
         #intro-overlay {
             position: fixed;
             top: 0;
@@ -149,7 +147,7 @@
         .brand-logo {
             color: #ffffff;
             font-family: Georgia, "Times New Roman", serif;
-            font-size: clamp(0.85rem, 2vw, 1rem); /* Fluido */
+            font-size: clamp(0.85rem, 2vw, 1rem);
             font-weight: 700;
             text-decoration: none;
             letter-spacing: -0.01em;
@@ -163,7 +161,7 @@
 
         .nav-links {
             display: flex;
-            gap: clamp(0.5rem, 2vw, 1.25rem); /* Espaciado fluido */
+            gap: clamp(0.5rem, 2vw, 1.25rem);
             list-style: none;
             align-items: center;
             flex-wrap: wrap;
@@ -172,7 +170,7 @@
         .nav-links a {
             color: #ffffff;
             text-decoration: none;
-            font-size: clamp(0.75rem, 1.5vw, 0.9rem); /* Fluido */
+            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
             font-weight: 500;
             transition: color 0.2s ease;
         }
@@ -195,7 +193,7 @@
             color: #ffffff;
         }
 
-        /* HEADER ESTRUCTURAL SEGURO - POSICIONES CARTESIANAS AJUSTADAS */
+        /* HEADER ESTRUCTURAL */
         header {
             font-family: Georgia, serif;
             position: relative;
@@ -203,8 +201,7 @@
             max-width: 900px;
             width: 100%;
             margin: 0 auto;
-            /* Padding superior de 06vh para ubicar "VISIÓN" */
-            padding: 06vh 2rem 1rem 2rem;
+            padding: 6vh 2rem 1rem 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -213,7 +210,7 @@
 
         header h1 {
             font-family: Georgia, serif;
-            font-size: clamp(2rem, 6vw, 4rem); /* Fluido general de contenedor */
+            font-size: clamp(2rem, 6vw, 4rem);
             font-weight: 700;
             text-transform: uppercase;
             color: #ffffff;
@@ -225,25 +222,24 @@
         
         /* PALABRA VISIÓN */
         #header-line1 {
-            color: #e2a547; /* Cobre Dorado Intenso y Profundo */
+            color: #e2a547;
             display: inline-block;
             font-size: clamp(2.5rem, 10vw, 6rem); 
             transition: color 0.3s ease;
             line-height: 1.1;
-            -webkit-text-stroke: 1.5px #ffffff; /* Línea blanca */
+            -webkit-text-stroke: 1.5px #ffffff;
             text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
         }
 
-        /* Separación vertical exacta para la palabra "QUIMERA" */
         .arrow-02-text {
-            margin-top: clamp(12vh, 17vh, 20vh); /* Fluido en altura */
+            margin-top: clamp(12vh, 17vh, 20vh);
             margin-bottom: 1rem;
         }
 
-        /* PALABRA QUIMERA ELÁSTICA (CLAMP) */
+        /* PALABRA QUIMERA */
         #word-quimera {
             display: inline-block;
-            font-size: clamp(2.5rem, 10vw, 6rem); /* Fluido */
+            font-size: clamp(2.5rem, 10vw, 6rem);
             transition: color 0.3s ease;
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #000000;
@@ -251,7 +247,7 @@
         }
 
         header p {
-            font-size: clamp(1rem, 2.5vw, 1.25rem); /* Fluido */
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
             color: #e2e8f0;
             margin: 0;
             text-align: center;
@@ -282,7 +278,7 @@
         .seq-card {
             background-color: #ffffff;
             border-radius: 12px;
-            padding: clamp(1.5rem, 4vw, 2rem) clamp(1.5rem, 5vw, 3rem); /* Fluido */
+            padding: clamp(1.5rem, 4vw, 2rem) clamp(1.5rem, 5vw, 3rem);
             box-shadow: var(--shadow-lg);
             cursor: pointer;
             text-align: center;
@@ -295,7 +291,7 @@
 
         .seq-card h2 {
             font-family: Georgia, serif;
-            font-size: clamp(1.2rem, 3.5vw, 1.6rem); /* Fluido */
+            font-size: clamp(1.2rem, 3.5vw, 1.6rem);
             color: var(--accent);
             text-transform: uppercase;
             min-height: 2.2rem;
@@ -320,7 +316,7 @@
             100% { transform: translateY(20px) scale(0, 0); opacity: 0; filter: brightness(10); }
         }
 
-        /* MODALES ACTUALIZADOS */
+        /* MODALES */
         .modal-overlay, .submodal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -350,7 +346,7 @@
 
         .modal-window, .submodal-text-window {
             background: var(--card-bg);
-            padding: clamp(1.5rem, 5vw, 3rem); /* Fluido */
+            padding: clamp(1.5rem, 5vw, 3rem);
             border-radius: 12px;
             max-width: 700px;
             width: 90%;
@@ -384,9 +380,9 @@
 
         .modal-title {
             font-family: Georgia, "Times New Roman", serif;
-            font-weight: bold; /* Equiparado con indexQE */
+            font-weight: bold;
             color: var(--accent);
-            font-size: clamp(1.2rem, 3vw, 1.5rem); /* Ajustado según indexQE */
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
             text-transform: uppercase;
             margin-bottom: 1.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -396,7 +392,7 @@
         }
 
         .modal-body {
-            font-size: clamp(0.9rem, 2vw, 1.02rem); /* Ajustado según indexQE */
+            font-size: clamp(0.9rem, 2vw, 1.02rem);
             color: #f1f5f9;
             line-height: 1.8;
             margin-bottom: 2rem;
@@ -420,14 +416,14 @@
             padding: 1rem 1.5rem;
             margin: 1.5rem 0;
             font-weight: bold;
-            font-size: clamp(0.8rem, 1.5vw, 0.9rem); /* Ajustado según indexQE */
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
             text-align: center;
             border-radius: 0 8px 8px 0;
         }
 
         .modal-close-wrapper {
             text-align: right;
-            font-size: clamp(1rem, 2.5vw, 1.2rem); /* Fluido */
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             font-weight: bold;
             min-height: 2rem;
         }
@@ -446,7 +442,7 @@
         .cursor {
             display: inline-block;
             width: 8px;
-            height: clamp(1rem, 2.5vw, 1.2rem); /* Fluido */
+            height: clamp(1rem, 2.5vw, 1.2rem);
             background-color: var(--accent);
             vertical-align: text-bottom;
             animation: blink 1s step-end infinite;
@@ -480,7 +476,7 @@
             position: absolute;
             top: -40px; right: -40px;
             color: var(--accent);
-            font-size: clamp(2rem, 6vw, 3rem); /* Fluido */
+            font-size: clamp(2rem, 6vw, 3rem);
             cursor: pointer;
             font-weight: bold;
             transition: transform 0.3s, color 0.3s;
@@ -488,7 +484,7 @@
         }
         .submodal-close:hover { transform: scale(1.2); color: #e0a96d; }
 
-        /* FOOTER CORREGIDO EXACTAMENTE CON LOS PARÁMETROS DE INDEXQE */
+        /* FOOTER */
         footer {
             position: absolute;
             bottom: 0;
@@ -500,7 +496,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             text-align: center;
             color: #ffffff;
-            font-size: clamp(0.7rem, 1.2vw, 0.85rem); /* Texto fluido */
+            font-size: clamp(0.7rem, 1.2vw, 0.85rem);
             opacity: 0;
             transition: opacity 500ms ease;
             z-index: 100;
@@ -745,9 +741,9 @@
                     const text = chars.charAt(Math.floor(Math.random() * chars.length));
 
                     if (Math.random() > 0.88) {
-                        ctx.fillStyle = '#fffbeb'; // Brillo inicial de la gota
+                        ctx.fillStyle = '#fffbeb';
                     } else {
-                        ctx.fillStyle = '#c88b32'; // Dorado / cobre principal
+                        ctx.fillStyle = '#c88b32';
                     }
 
                     ctx.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -763,7 +759,7 @@
             matrixInterval = setInterval(draw, 33);
         }
 
-        // Función para desvanecer elementos e iniciar la lluvia Matrix (copiado de indexQE)
+        // Función para desvanecer elementos e iniciar la lluvia Matrix
         function triggerMatrixAndFadeElements() {
             const bgLayer = document.getElementById('bg-layer');
             if (bgLayer) bgLayer.style.opacity = '0';
@@ -787,7 +783,7 @@
 
         let globalColorInterval = null;
 
-        // Función para activar el hipervínculo final con animación de color en la palabra QUIMERA (copiado de indexQE)
+        // Función para activar el hipervínculo final
         function enableFinalHyperlink() {
             const wordContainer = document.getElementById('word-quimera');
             const letters = wordContainer.querySelectorAll('span');
@@ -839,7 +835,6 @@
                 overlay.style.background = '#ffffff';
                 overlay.style.opacity = '1';
 
-                // Tiempo ampliado a 1500ms para asegurar un fundido cinemático y progresivo
                 setTimeout(() => {
                     window.location.href = "https://quimerac3.github.io/QuimeraC3-Q/";
                 }, 1500);
@@ -935,7 +930,6 @@
         centralCard.addEventListener('click', async () => {
             if (isCardBusy) return;
 
-            // Al seleccionar el recuadro cuando contiene "HACIA ESTO VAMOS."
             if (currentStep === storyData.length - 1) {
                 triggerMatrixAndFadeElements();
             }
@@ -1233,7 +1227,6 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
                 overlay.style.background = '#ffffff';
                 overlay.style.opacity = '1';
                 
-                // Ampliado de 500ms a 1200ms
                 setTimeout(() => {
                     window.location.href = "https://quimerac3.github.io/";
                 }, 1200);
@@ -1257,7 +1250,6 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
                     await typeCardTitle(storyData[0].title, 30);
                     isCardBusy = false;
 
-                    // FOOTER ACTIVADO Y CON TIEMPO EXACTO DE INDEXQE
                     document.querySelector('footer').classList.add('visible');
 
                     setTimeout(() => {
