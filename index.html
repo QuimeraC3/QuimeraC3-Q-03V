@@ -406,7 +406,7 @@
             display: none;
             max-width: 600px;
             width: 100%;
-            transform: translateY(-20px);
+            transform: translateY(0px);
         }
 
         .seq-card h2 {
@@ -418,16 +418,16 @@
             -webkit-text-stroke: 0.5px #000000;
         }
 
-        .seq-card:hover { transform: translateY(20px) scale(1.05); }
+        .seq-card:hover { transform: translateY(0px) scale(1.05); }
 
         .tv-on-card { animation: tvTurnOnCard 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         .tv-off-card { animation: tvTurnOffCard 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
 
         @keyframes tvTurnOnCard {
-            0% { transform: translateY(20px) scale(0, 0); opacity: 0; filter: brightness(10); }
-            40% { transform: translateY(20px) scale(0.001, 0.005); opacity: 1; filter: brightness(5); }
-            70% { transform: translateY(20px) scale(1, 0.005); opacity: 1; filter: brightness(2); }
-            100% { transform: translateY(20px) scale(1, 1); opacity: 1; filter: brightness(1); }
+            0% { transform: translateY(0px) scale(0, 0); opacity: 0; filter: brightness(10); }
+            40% { transform: translateY(0px) scale(0.001, 0.005); opacity: 1; filter: brightness(5); }
+            70% { transform: translateY(0px) scale(1, 0.005); opacity: 1; filter: brightness(2); }
+            100% { transform: translateY(0px) scale(1, 1); opacity: 1; filter: brightness(1); }
         }
 
         @keyframes tvTurnOffCard {
