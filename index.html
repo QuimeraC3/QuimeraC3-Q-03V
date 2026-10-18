@@ -1275,16 +1275,24 @@
             fullscreenToggle.textContent = !document.fullscreenElement ? '⛶ Pantalla Completa' : '❌ Salir Pantalla Completa';
         });
 
-        // SECUENCIA DE ENTRADA SINCRONIZADA CON EFECTOS LÁSER Y HOLOGRÁFICOS
+        // SECUENCIA DE ENTRADA SINCRONIZADA CON DESVANECIMIENTO BLANCO -> NEGRO Y LÁSER
         window.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('intro-overlay');
 
             async function runEntranceSequence() {
+                // 1. Iniciar en blanco total
+                overlay.style.backgroundColor = '#ffffff';
+                overlay.style.opacity = '1';
+                await new Promise(r => setTimeout(r, 200));
+
+                // 2. Transición suave de blanco hacia el negro
                 overlay.style.backgroundColor = '#000000';
-                await new Promise(r => setTimeout(r, 1000));
+                await new Promise(r => setTimeout(r, 1200)); // Esperar a que concluya la transición de color
 
                 document.getElementById('bg-layer').style.opacity = '1';
                 document.getElementById('cursor-light-glow').classList.add('visible');
+                
+                // 3. Desvanecer la capa negra para revelar el contenido
                 overlay.style.opacity = '0';
                 await new Promise(r => setTimeout(r, 1000));
 
@@ -1328,17 +1336,17 @@
                 subText.classList.remove('active-laser');
                 subText.classList.add('revealed', 'hologram-mode');
 
-                // 1. La tarjeta central aparece una sola vez vacía con efecto de TV
+                // 4. La tarjeta central aparece una sola vez vacía con efecto de TV
                 centralCard.style.display = 'block';
                 cardTitleText.textContent = ''; 
                 centralCard.classList.add('tv-on-card');
                 await new Promise(r => setTimeout(r, 600));
 
-                // 2. Después se anima únicamente el primer título con efecto láser
+                // 5. Después se anima únicamente el primer título con efecto láser
                 await updateCardTitleLaser(storyData[0].title);
                 isCardBusy = false;
 
-                // 3. Finalmente continúa la animación del footer
+                // 6. Finalmente continúa la animación del footer
                 const mainFooter = document.getElementById('main-footer');
                 const footerText = document.getElementById('footer-text');
                 footerText.textContent = footerText.dataset.text.replace('2026', new Date().getFullYear());
