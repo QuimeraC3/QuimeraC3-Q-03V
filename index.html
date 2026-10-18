@@ -53,7 +53,7 @@
             filter: blur(12px);
         }
 
-        /* CAPA CRT SCANLINES (Efecto de televisión antigua) */
+        /* CAPA CRT SCANLINES (Efecto de televisión antigua global) */
         .crt-scanlines {
             position: fixed;
             top: 0;
@@ -65,6 +65,21 @@
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
             background-size: 100% 3px, 6px 100%;
             opacity: 0.65;
+        }
+
+        /* Scanlines internas para ventanas modales */
+        .modal-scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+            background-size: 100% 3px, 6px 100%;
+            opacity: 0.75;
+            border-radius: 12px;
         }
 
         /* Capa de fondo estática, nítida y completa */
@@ -517,6 +532,8 @@
             text-align: center;
             -webkit-text-stroke: 0.25px #ffffff;
             text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+            position: relative;
+            z-index: 10;
         }
 
         .modal-body {
@@ -528,6 +545,8 @@
             min-height: 100px;
             -webkit-text-stroke: 0.3px #000000;
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9);
+            position: relative;
+            z-index: 10;
         }
 
         .modal-body a {
@@ -556,6 +575,8 @@
             font-size: clamp(1rem, 2.5vw, 1.2rem);
             font-weight: bold;
             min-height: 2rem;
+            position: relative;
+            z-index: 10;
         }
 
         .modal-close-btn {
@@ -563,6 +584,7 @@
             cursor: pointer;
             text-decoration: underline;
             transition: color 0.3s ease;
+            display: inline-block;
         }
 
         .modal-close-btn:hover { 
@@ -577,7 +599,7 @@
             vertical-align: text-bottom;
             animation: blink 1s step-end infinite;
             margin-left: 2px;
-            opacity: 0; 
+            opacity: 1; 
             transition: opacity 0.3s ease;
         }
 
@@ -694,6 +716,7 @@
     <!-- MODAL PRINCIPAL -->
     <div id="main-modal" class="modal-overlay">
         <div class="modal-window" id="modal-window">
+            <div class="modal-scanlines"></div>
             <h2 class="modal-title laser-burn-effect" id="modal-title"></h2>
             <div class="modal-body" id="modal-body"></div>
             <div class="modal-close-wrapper">
@@ -709,10 +732,11 @@
             <img id="submodal-img" src="" alt="Esquema Quimera" style="opacity: 0;">
             
             <div class="submodal-text-window" id="submodal-text-window">
-                <h2 class="modal-title" id="sub-modal-title"></h2>
+                <div class="modal-scanlines"></div>
+                <h2 class="modal-title laser-burn-effect" id="sub-modal-title"></h2>
                 <div class="modal-body" id="sub-modal-body"></div>
                 <div class="modal-close-wrapper">
-                    <span class="modal-close-btn" id="sub-modal-close-btn">Cerrar.</span><span class="cursor" id="sub-modal-cursor"></span>
+                    <span class="modal-close-btn laser-burn-effect" id="sub-modal-close-btn">Cerrar.</span><span class="cursor" id="sub-modal-cursor"></span>
                 </div>
             </div>
         </div>
@@ -847,7 +871,7 @@
         const modalCloseBtn = document.getElementById('modal-close-btn');
         const modalCursor = document.getElementById('modal-cursor');
         
-        let isTyping = false;
+        let isModalBusy = false;
         let isCardBusy = true; 
 
         let matrixInterval = null;
@@ -951,43 +975,14 @@
             cardTitleContainer.classList.add('revealed');
         }
 
-        const typeSection = async (element, text, speed) => {
-            let i = 0;
-            let isTag = false;
-            let currentStr = '';
-            while (i < text.length) {
-                if (!isTyping) break;
-                let char = text.charAt(i);
-                currentStr += char;
-                element.innerHTML = currentStr;
-                element.appendChild(modalCursor);
-                modalCursor.style.opacity = '1';
-
-                if (char === '<') isTag = true;
-                if (char === '>') isTag = false;
-                if (!isTag) await new Promise(r => setTimeout(r, speed));
-                i++;
-            }
-        };
-
-        const typeSubSection = async (element, text, speed, cursorElem) => {
-            let i = 0;
-            let isTag = false;
-            let currentStr = '';
-            while (i < text.length) {
-                if (!isSubTyping) break;
-                let char = text.charAt(i);
-                currentStr += char;
-                element.innerHTML = currentStr;
-                element.appendChild(cursorElem);
-                cursorElem.style.opacity = '1';
-
-                if (char === '<') isTag = true;
-                if (char === '>') isTag = false;
-                if (!isTag) await new Promise(r => setTimeout(r, speed));
-                i++;
-            }
-        };
+        // Función reutilizable para animar la revelación de elementos mediante láser en orden secuencial
+        async function revealElementWithLaser(element) {
+            element.classList.remove('revealed');
+            element.classList.add('laser-burn-effect', 'active-laser');
+            await new Promise(r => setTimeout(r, 800));
+            element.classList.remove('active-laser');
+            element.classList.add('revealed');
+        }
 
         function triggerCardGlitch(callback) {
             const glitchOverlay = document.getElementById('glitch-overlay');
@@ -1010,7 +1005,7 @@
         }
 
         centralCard.addEventListener('click', async () => {
-            if (isCardBusy) return;
+            if (isCardBusy || isModalBusy) return;
 
             if (currentStep === storyData.length - 1) {
                 triggerMatrixAndFadeElements();
@@ -1023,47 +1018,44 @@
                 mainModal.classList.add('show');
                 modalWindow.classList.remove('tv-off');
                 modalWindow.classList.add('tv-on');
-                modalTitle.innerHTML = '';
+                
+                modalTitle.textContent = '';
                 modalBody.innerHTML = '';
-                modalCloseBtn.innerHTML = 'Cerrar.';
-                modalCursor.style.opacity = '0';
-                isTyping = true;
+                modalCloseBtn.textContent = 'Cerrar.';
+                isModalBusy = true;
 
                 const data = storyData[currentStep];
                 modalBody.style.textAlign = data.align || 'left';
                 
-                await typeSection(modalTitle, data.title, 20);
-                if (!isTyping) return;
+                // 1. Título con Láser
+                modalTitle.textContent = data.title;
+                await revealElementWithLaser(modalTitle);
                 
+                // 2. Bloques de texto con Láser secuencial
                 for (let block of data.content) {
-                    if (!isTyping) break;
-                    
                     const blockElem = document.createElement(block.type === 'flow' ? 'div' : 'p');
-                    
                     if (block.type === 'flow') {
-                        blockElem.className = 'process-flow';
+                        blockElem.className = 'process-flow laser-burn-effect';
                     } else {
+                        blockElem.className = 'laser-burn-effect';
                         blockElem.style.marginBottom = '1rem';
                     }
-                    
+                    blockElem.textContent = block.text;
                     modalBody.appendChild(blockElem);
-                    await typeSection(blockElem, block.text, 10);
+                    await revealElementWithLaser(blockElem);
                 }
 
-                if (!isTyping) return;
-                await typeSection(modalCloseBtn, "Cerrar.", 30);
+                // 3. Botón "Cerrar." con Láser
+                modalCloseBtn.textContent = 'Cerrar.';
+                await revealElementWithLaser(modalCloseBtn);
                 
-                if(isTyping) {
-                    modalCursor.style.opacity = '1';
-                    isTyping = false;
-                }
+                isModalBusy = false;
             });
         });
 
         const triggerTVClose = () => {
-            if (modalWindow.classList.contains('tv-off')) return;
-            isTyping = false; 
-            modalCursor.style.opacity = '0';
+            if (modalWindow.classList.contains('tv-off') || isModalBusy) return;
+            
             modalWindow.classList.remove('tv-on');
             modalWindow.classList.add('tv-off');
 
@@ -1089,11 +1081,11 @@
 
         modalCloseBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if(!isTyping) triggerTVClose();
+            if(!isModalBusy) triggerTVClose();
         });
 
         mainModal.addEventListener('click', (e) => {
-            if (e.target === mainModal && !isTyping) triggerTVClose();
+            if (e.target === mainModal && !isModalBusy) triggerTVClose();
         });
 
         /* --- CONTROL DE SUBMODALES Y SECUENCIA HELICOIDAL --- */
@@ -1104,9 +1096,8 @@
         const subModalTitle = document.getElementById('sub-modal-title');
         const subModalBody = document.getElementById('sub-modal-body');
         const subModalCloseBtn = document.getElementById('sub-modal-close-btn');
-        const subModalCursor = document.getElementById('sub-modal-cursor');
 
-        let isSubTyping = false;
+        let isSubModalBusy = false;
         let helicoidalSequenceRunning = false;
 
         window.openSubModal = (imgSrc) => {
@@ -1159,47 +1150,51 @@
             }
         };
 
-        const showHelicoidalTextWindow = () => {
+        const showHelicoidalTextWindow = async () => {
             subImg.style.display = 'none';
             subModalXBtn.style.display = 'none';
             subModalTextWindow.style.display = 'block';
             subModalTextWindow.classList.remove('tv-off');
             subModalTextWindow.classList.add('tv-on');
 
-            subModalTitle.innerHTML = '';
+            subModalTitle.textContent = '';
             subModalBody.innerHTML = '';
-            subModalCloseBtn.innerHTML = '';
-            subModalCursor.style.opacity = '0';
-            isSubTyping = true;
+            subModalCloseBtn.textContent = 'Cerrar.';
+            isSubModalBusy = true;
 
-            const textContent = `Representa el conocimiento como un proceso continuo de transformación. Una teoría o comprensión previa permite interpretar la realidad, pero al enfrentarse con nuevos fenómenos surgen problemas, contradicciones o interrogantes que cuestionan sus límites.
+            const paragraphs = [
+                "Representa el conocimiento como un proceso continuo de transformación. Una teoría o comprensión previa permite interpretar la realidad, pero al enfrentarse con nuevos fenómenos surgen problemas, contradicciones o interrogantes que cuestionan sus límites.",
+                "El análisis permite investigar y construir respuestas; la revisión somete esas respuestas a criterios de rigor, coherencia y evidencia; y la transferencia incorpora el nuevo conocimiento a la comprensión existente.",
+                "Sin embargo, el proceso no termina con la solución. Cada problema resuelto genera nuevas preguntas, y las nuevas preguntas permiten acceder a problemas de mayor complejidad.",
+                "Por ello, el conocimiento no se desarrolla en círculos que regresan al mismo punto, sino mediante una hélice ascendente: cada ciclo conserva, transforma y amplía lo aprendido, conduciendo hacia niveles progresivamente más profundos de comprensión.",
+                "Resolver un problema no es el final del conocimiento; es el comienzo de una pregunta mejor."
+            ];
 
-El análisis permite investigar y construir respuestas; la revisión somete esas respuestas a criterios de rigor, coherencia y evidencia; y la transferencia incorpora el nuevo conocimiento a la comprensión existente.
+            await new Promise(r => setTimeout(r, 400));
 
-Sin embargo, el proceso no termina con la solución. Cada problema resuelto genera nuevas preguntas, y las nuevas preguntas permiten acceder a problemas de mayor complejidad.
+            // Título
+            subModalTitle.textContent = "MODELO HELICOIDAL DEL DESARROLLO DEL CONOCIMIENTO.";
+            await revealElementWithLaser(subModalTitle);
 
-Por ello, el conocimiento no se desarrolla en círculos que regresan al mismo punto, sino mediante una hélice ascendente: cada ciclo conserva, transforma y amplía lo aprendido, conduciendo hacia niveles progresivamente más profundos de comprensión.
+            // Contenido en párrafos con láser
+            for (let text of paragraphs) {
+                const pElem = document.createElement('p');
+                pElem.className = 'laser-burn-effect';
+                pElem.style.marginBottom = '1rem';
+                pElem.textContent = text;
+                subModalBody.appendChild(pElem);
+                await revealElementWithLaser(pElem);
+            }
 
-Resolver un problema no es el final del conocimiento; es el comienzo de una pregunta mejor.`;
+            // Botón "Cerrar." con láser
+            subModalCloseBtn.textContent = 'Cerrar.';
+            await revealElementWithLaser(subModalCloseBtn);
 
-            setTimeout(async () => {
-                await typeSubSection(subModalTitle, "MODELO HELICOIDAL DEL DESARROLLO DEL CONOCIMIENTO.", 20, subModalCursor);
-                if (!isSubTyping) return;
-                await typeSubSection(subModalBody, textContent, 8, subModalCursor);
-                if (!isSubTyping) return;
-                await typeSubSection(subModalCloseBtn, "Cerrar.", 30, subModalCursor);
-                
-                if(isSubTyping) {
-                    subModalCursor.style.opacity = '1';
-                    isSubTyping = false;
-                }
-            }, 500);
+            isSubModalBusy = false;
         };
 
         const triggerHelicoidalTextClose = () => {
-            if (subModalTextWindow.classList.contains('tv-off')) return;
-            isSubTyping = false;
-            subModalCursor.style.opacity = '0';
+            if (subModalTextWindow.classList.contains('tv-off') || isSubModalBusy) return;
             subModalTextWindow.classList.remove('tv-on');
             subModalTextWindow.classList.add('tv-off');
 
@@ -1218,12 +1213,12 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
 
         subModalCloseBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (!isSubTyping) triggerHelicoidalTextClose();
+            if (!isSubModalBusy) triggerHelicoidalTextClose();
         });
 
         window.closeSubModal = () => {
             helicoidalSequenceRunning = false;
-            isSubTyping = false;
+            isSubModalBusy = false;
             subImg.style.opacity = '0';
             subModal.classList.remove('show');
             
@@ -1236,7 +1231,7 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
         subModal.addEventListener('click', (e) => {
             if (e.target === subModal) {
                 if (subModalTextWindow.style.display === 'block') {
-                    if (!isSubTyping) triggerHelicoidalTextClose();
+                    if (!isSubModalBusy) triggerHelicoidalTextClose();
                 } else {
                     closeSubModal();
                 }
