@@ -4,14 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VISIÓN DE QUIMERA &bull; Ecosistema Científico y Académico</title>
+    
+    <!-- PRECARGA DEFINITIVA DE TODAS LAS IMÁGENES DEL ECOSISTEMA -->
+    <link rel="preload" href="Quimera_Vision.webp" as="image">
+    <link rel="preload" href="Quimera_QE_Mod.jpg" as="image">
+    <link rel="preload" href="glitch_Q.webp" as="image">
+    <link rel="preload" href="glitch_U.webp" as="image">
+    <link rel="preload" href="glitch_I.webp" as="image">
+    <link rel="preload" href="glitch_M.webp" as="image">
+    <link rel="preload" href="glitch_E.webp" as="image">
+    <link rel="preload" href="glitch_R.webp" as="image">
+    <link rel="preload" href="glitch_A.webp" as="image">
+    <link rel="preload" href="01-borrador_T-P.png" as="image">
+    <link rel="preload" href="02-Teoria-Preg.png" as="image">
+    <link rel="preload" href="03-HECE.png" as="image">
+    <link rel="preload" href="04-MHDC.png" as="image">
+
     <style>
         :root {
             --text-main: #0f172a;
             --primary: #0f766e;
-            --accent: #c88b32; /* Cobre Dorado */
+            --accent: #c88b32;
             --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
-            
             --card-bg: rgba(15, 23, 42, 0.90);
             --card-border: rgba(255, 255, 255, 0.15);
         }
@@ -34,25 +49,25 @@
             transition: filter 1s ease;
         }
 
-        /* Desenfoque global ligero y fluido */
         body.blurring {
             filter: blur(12px);
         }
 
-        /* Transición de desenfoque general */
-        #bg-layer, header, main, .top-bar, footer {
-            transition: filter 0.5s ease, opacity 500ms ease;
+        /* CAPA CRT SCANLINES (Efecto de televisión antigua) */
+        .crt-scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 2000;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 6px 100%;
+            opacity: 0.65;
         }
 
-        body.modal-blur-active #bg-layer,
-        body.modal-blur-active header,
-        body.modal-blur-active main,
-        body.modal-blur-active .top-bar,
-        body.modal-blur-active footer {
-            filter: blur(8px);
-        }
-
-        /* Capa de fondo */
+        /* Capa de fondo estática, nítida y completa */
         #bg-layer {
             position: fixed;
             top: 0;
@@ -68,6 +83,24 @@
             transition: opacity 1000ms ease, filter 0.5s ease;
         }
 
+        /* Capa de luz reactiva exclusiva del puntero */
+        .cursor-light-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle 400px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 189, 248, 0.22), rgba(200, 139, 50, 0.12) 45%, transparent 80%);
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        .cursor-light-glow.visible {
+            opacity: 1;
+        }
+
         /* Canvas para Lluvia de Código Matrix */
         #matrix-canvas {
             position: fixed;
@@ -81,14 +114,47 @@
             transition: opacity 1.5s ease;
         }
 
-        /* Clase de desvanecimiento a negro para elementos de la interfaz */
+        /* Capa de Glitch Central para las transiciones previas al modal */
+        #glitch-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2500;
+            pointer-events: none;
+            opacity: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            transition: opacity 0.1s ease;
+        }
+
+        #glitch-img {
+            max-width: 55vw;
+            max-height: 55vh;
+            object-fit: contain;
+            filter: drop-shadow(0 0 40px rgba(56, 189, 248, 1)) contrast(160%) brightness(1.3);
+            animation: glitchJitter 0.08s infinite steps(2);
+        }
+
+        @keyframes glitchJitter {
+            0% { transform: translate(0, 0) skew(0deg); filter: hue-rotate(0deg); }
+            20% { transform: translate(-6px, 4px) skew(-3deg); filter: hue-rotate(90deg); }
+            40% { transform: translate(6px, -4px) skew(3deg); filter: hue-rotate(-90deg); }
+            60% { transform: translate(-3px, -4px) skew(1deg); }
+            80% { transform: translate(5px, 3px) skew(-2deg); }
+            100% { transform: translate(0, 0) skew(0deg); }
+        }
+
         .fade-out-element {
             opacity: 0 !important;
             pointer-events: none !important;
             transition: opacity 1.2s ease !important;
         }
 
-        /* Capa intro con animación de entrada de blanco a negro */
         #intro-overlay {
             position: fixed;
             top: 0;
@@ -102,12 +168,7 @@
             transition: opacity 1s ease, background-color 1.2s ease;
         }
 
-        /* Navegación Top Bar */
-        .top-bar, header, footer {
-            opacity: 0;
-            transition: opacity 500ms ease, filter 0.5s ease;
-        }
-
+        /* NAVEGACIÓN TOP BAR */
         .top-bar {
             background-color: rgba(11, 19, 41, 0.0);
             padding: 0.85rem 2rem;
@@ -116,6 +177,8 @@
             left: 0;
             width: 100%;
             z-index: 100;
+            opacity: 0;
+            transition: opacity 500ms ease;
         }
 
         .top-bar-container {
@@ -160,19 +223,113 @@
         .nav-links a:hover {
             color: #38bdf8;
         }
-        
+
         #audio-toggle, #fullscreen-toggle {
-            background: rgba(15, 118, 110, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 0.3rem 0.8rem;
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.22);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            color: #ffffff;
+            padding: 0.35rem 0.9rem;
             border-radius: 20px;
             cursor: pointer;
-            transition: opacity 500ms ease;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+            transition: opacity 500ms ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         #audio-toggle:hover, #fullscreen-toggle:hover {
-            background: var(--accent);
+            background: rgba(56, 189, 248, 0.5);
+            border-color: #38bdf8;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
             color: #ffffff;
+        }
+
+        /* EFECTO LÁSER COMÚN */
+        .laser-burn-effect {
+            opacity: 0;
+            clip-path: inset(0 100% 0 0);
+            position: relative;
+        }
+
+        .laser-burn-effect.active-laser {
+            opacity: 1;
+            animation: hyperLaserReveal 1.2s cubic-bezier(0.15, 1, 0.2, 1) forwards;
+        }
+
+        .laser-burn-effect.revealed {
+            opacity: 1;
+            clip-path: inset(0 0 0 0);
+        }
+
+        .laser-burn-effect.active-laser::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            bottom: -30px;
+            left: 0;
+            width: 16px;
+            background: radial-gradient(circle, #ffffff 0%, #38bdf8 40%, #c88b32 80%, transparent 100%);
+            box-shadow: 0 0 35px #38bdf8, 0 0 70px #fffbeb, 0 0 100px #c88b32, inset 0 0 15px #ffffff;
+            animation: hyperLaserBarMove 1.2s cubic-bezier(0.15, 1, 0.2, 1) forwards;
+            z-index: 15;
+            filter: blur(0.5px);
+        }
+
+        .laser-burn-effect.active-laser::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            height: 120%;
+            pointer-events: none;
+            background: linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(56,189,248,0.6) 30%, rgba(200,139,50,0.3) 60%, transparent 100%);
+            mix-blend-mode: color-dodge;
+            animation: hyperLaserSparksWave 1.2s cubic-bezier(0.15, 1, 0.2, 1) forwards;
+            z-index: 12;
+        }
+
+        @keyframes hyperLaserReveal {
+            0% {
+                clip-path: inset(0 100% 0 0);
+                filter: brightness(4) contrast(200%) drop-shadow(0 0 30px rgba(56, 189, 248, 1));
+            }
+            50% {
+                filter: brightness(2.5) contrast(150%) drop-shadow(0 0 15px rgba(200, 139, 50, 0.9));
+            }
+            100% {
+                clip-path: inset(0 0 0 0);
+                filter: brightness(1) contrast(100%) drop-shadow(0 0 0px transparent);
+            }
+        }
+
+        @keyframes hyperLaserBarMove {
+            0% { left: 0%; opacity: 1; transform: scaleY(1.8) skewX(-15deg); }
+            50% { transform: scaleY(2.2) skewX(5deg); }
+            90% { opacity: 1; }
+            100% { left: 100%; opacity: 0; transform: scaleY(0.5) skewX(0deg); }
+        }
+
+        @keyframes hyperLaserSparksWave {
+            0% { opacity: 1; clip-path: inset(0 100% 0 0); }
+            100% { opacity: 0; clip-path: inset(0 0 0 0); }
+        }
+
+        .hologram-mode {
+            animation: hologramNeonGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes hologramNeonGlow {
+            0% { text-shadow: 0 0 8px rgba(56, 189, 248, 0.7), 0 0 20px rgba(15, 118, 110, 0.5), 3px 3px 8px rgba(0, 0, 0, 0.8); }
+            50% { text-shadow: 0 0 20px rgba(56, 189, 248, 1), 0 0 35px rgba(56, 189, 248, 0.8), 0 0 50px rgba(200, 139, 50, 0.6), 3px 3px 8px rgba(0, 0, 0, 0.8); }
+            100% { text-shadow: 0 0 8px rgba(56, 189, 248, 0.7), 0 0 20px rgba(15, 118, 110, 0.5), 3px 3px 8px rgba(0, 0, 0, 0.8); }
+        }
+
+        @keyframes hologramBoxGlow {
+            0% { box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), 0 0 30px rgba(15, 118, 110, 0.3), 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
+            50% { box-shadow: 0 0 32px rgba(56, 189, 248, 0.95), 0 0 65px rgba(56, 189, 248, 0.65), 0 0 85px rgba(200, 139, 50, 0.55), 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
+            100% { box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), 0 0 30px rgba(15, 118, 110, 0.3), 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
         }
 
         /* HEADER ESTRUCTURAL */
@@ -190,24 +347,10 @@
             text-align: center;
         }
 
-        header h1 {
-            font-family: Georgia, serif;
-            font-size: clamp(2rem, 6vw, 4rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #ffffff;
-            line-height: 1.3;
-            margin: 0;
-            text-align: center;
-            width: 100%;
-        }
-        
-        /* PALABRA VISIÓN */
         #header-line1 {
             color: #e2a547;
             display: inline-block;
             font-size: clamp(2.0rem, 09vw, 5rem); 
-            transition: color 0.3s ease;
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #ffffff;
             text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
@@ -219,23 +362,27 @@
             margin-bottom: 1rem;
         }
 
-        /* PALABRA QUIMERA */
         #word-quimera {
             display: inline-block;
             font-size: clamp(2.5rem, 10vw, 6rem);
-            transition: color 0.3s ease;
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #000000;
             text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
             transform: translateY(1.5rem);
+            color: #ffffff;
         }
 
-        header p {
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            color: #e2e8f0;
-            margin: 0;
+        .subtitle-text {
+            margin-top: 2rem;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 700;
+            line-height: 1.5;
+            max-width: 900px;
+            width: 90%;
+            color: #ffffff;
             text-align: center;
-            max-width: 750px;
+            z-index: 10;
+            -webkit-text-stroke: 0.75px #000000;
         }
 
         .hidden-letter {
@@ -256,7 +403,6 @@
             padding: 2rem 2rem 11vh 2rem; 
             z-index: 10;
             position: relative;
-            transition: filter 0.5s ease;
         }
 
         .seq-card {
@@ -301,7 +447,7 @@
             100% { transform: translateY(20px) scale(0, 0); opacity: 0; filter: brightness(10); }
         }
 
-        /* MODALES */
+        /* MODALES Y SUBMODALES CON TEXTURA DE RESPALDO Quimera_QE_Mod.jpg */
         .modal-overlay, .submodal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -313,13 +459,15 @@
             transition: opacity 0.4s ease;
         }
 
-        .modal-overlay, .submodal-overlay {
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(5px);
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
             z-index: 2000;
         }
 
         .submodal-overlay {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
             z-index: 3000;
             transition: opacity 0.5s ease;
         }
@@ -330,7 +478,9 @@
         }
 
         .modal-window, .submodal-text-window {
-            background: var(--card-bg);
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('Quimera_QE_Mod.jpg');
+            background-size: cover;
+            background-position: center center;
             padding: clamp(1.5rem, 5vw, 3rem);
             border-radius: 12px;
             max-width: 700px;
@@ -340,27 +490,28 @@
             position: relative;
             box-shadow: var(--shadow-lg);
             border: 1px solid var(--card-border);
+            transform-origin: center center;
         }
 
         .submodal-text-window {
             display: none;
         }
 
-        .tv-on { animation: tvTurnOn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards !important; }
-        .tv-off { animation: tvTurnOff 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards !important; }
+        .tv-on { animation: tvTurnOn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards, hologramBoxGlow 3s ease-in-out infinite alternate !important; animation-delay: 0s, 0.4s; }
+        .tv-off { animation: tvShutdown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards !important; }
 
-        @keyframes tvTurnOn {
-            0% { transform: scale(0, 0); opacity: 0; filter: brightness(10); }
-            40% { transform: scale(0.001, 0.005); opacity: 1; filter: brightness(5); }
-            70% { transform: scale(1, 0.005); opacity: 1; filter: brightness(2); }
-            100% { transform: scale(1, 1); opacity: 1; filter: brightness(1); }
+        @keyframes tvShutdown {
+            0% { transform: scale(1, 1); filter: brightness(1); opacity: 1; }
+            40% { transform: scale(1, 0.005); filter: brightness(3); opacity: 1; }
+            70% { transform: scale(0.001, 0.005); filter: brightness(5); opacity: 1; }
+            100% { transform: scale(0, 0); filter: brightness(0); opacity: 0; }
         }
 
-        @keyframes tvTurnOff {
-            0% { transform: scale(1, 1); opacity: 1; filter: brightness(1); }
-            40% { transform: scale(1, 0.005); opacity: 1; filter: brightness(2); }
-            70% { transform: scale(0.001, 0.005); opacity: 1; filter: brightness(5); }
-            100% { transform: scale(0, 0); opacity: 0; filter: brightness(10); }
+        @keyframes tvTurnOn {
+            0% { transform: scale(0, 0); filter: brightness(0); opacity: 0; }
+            30% { transform: scale(0.001, 0.005); filter: brightness(5); opacity: 1; }
+            60% { transform: scale(1, 0.005); filter: brightness(3); opacity: 1; }
+            100% { transform: scale(1, 1); filter: brightness(1); opacity: 1; }
         }
 
         .modal-title {
@@ -374,6 +525,8 @@
             padding-bottom: 0.5rem;
             min-height: 2.5rem;
             text-align: center;
+            -webkit-text-stroke: 0.25px #ffffff;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
         }
 
         .modal-body {
@@ -383,6 +536,8 @@
             margin-bottom: 2rem;
             white-space: pre-line;
             min-height: 100px;
+            -webkit-text-stroke: 0.3px #000000;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9);
         }
 
         .modal-body a {
@@ -395,7 +550,7 @@
         .modal-body a:hover { color: #e0a96d; }
 
         .process-flow {
-            background-color: rgba(15, 118, 110, 0.2);
+            background-color: rgba(15, 118, 110, 0.25);
             color: #5eead4;
             border-left: 4px solid var(--primary);
             padding: 1rem 1.5rem;
@@ -470,11 +625,11 @@
         .submodal-close:hover { transform: scale(1.2); color: #e0a96d; }
 
         /* FOOTER */
-        footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+        footer.laser-burn-effect {
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
             padding: 0.5rem 1rem;
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(8px);
@@ -482,86 +637,84 @@
             text-align: center;
             color: #ffffff;
             font-size: clamp(0.7rem, 1.2vw, 0.85rem);
-            opacity: 0;
-            transition: opacity 500ms ease;
             z-index: 100;
-        }
-
-        footer.visible {
-            opacity: 1;
         }
 
         footer p {
             color: #e2e8f0;
         }
 
-        @media (max-width: 768px) {
-            .submodal-close { 
-                top: -15px; 
-                right: 0px; 
-                text-shadow: 0 0 10px #000; 
-            }
-            .top-bar { 
-                flex-direction: column; 
-                gap: 0.5rem; 
-            }
-            .nav-links {
-                justify-content: center;
-            }
-            footer {
-                position: relative !important;
-                margin-top: 1.5rem;
-                padding: 1rem;
-            }
+        @media (max-width: 900px) {
+            body { height: auto; overflow-y: auto; overflow-x: hidden; }
+            #bg-layer { height: 100%; background-attachment: scroll; }
+            .top-bar { position: relative !important; flex-direction: column; gap: 0.5rem; padding: 1rem; text-align: center; }
+            .top-bar-container { flex-direction: column; gap: 0.8rem; }
+            .nav-links { justify-content: center; gap: 0.8rem; }
+            header { padding: 2rem 1rem 1rem 1rem; }
+            .submodal-close { top: -15px; right: 0px; text-shadow: 0 0 10px #000; }
+            footer.laser-burn-effect { position: relative !important; margin-top: 1.5rem; padding: 1rem; bottom: auto !important; left: auto !important; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Capa CRT Scanlines -->
+    <div class="crt-scanlines"></div>
+
     <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
     <div id="bg-layer"></div>
+    <div class="cursor-light-glow" id="cursor-light-glow"></div>
     <canvas id="matrix-canvas"></canvas>
+
+    <!-- Capa de Glitch Central -->
+    <div id="glitch-overlay">
+        <img id="glitch-img" src="" alt="Glitch Visual">
+    </div>
+
     <div id="intro-overlay"></div>
 
     <nav class="top-bar">
         <div class="top-bar-container">
-            <a href="https://quimerac3.github.io/" class="brand-logo" data-text="QUIMERA - Inicio General"></a>
+            <a href="https://quimerac3.github.io/" class="brand-logo laser-burn-effect" id="brand-logo" data-text="QUIMERA - Inicio General"></a>
             <ul class="nav-links">
-                <li><a href="#" id="audio-toggle"><span style="color: #ffffff;">🎵</span> Música: OFF</a></li>
-                <li><a href="#" id="fullscreen-toggle">⛶ Pantalla Completa</a></li>
+                <li><a href="#" id="audio-toggle" class="laser-burn-effect"><span style="color: #ffffff;">🎵</span> Música: OFF</a></li>
+                <li><a href="#" id="fullscreen-toggle" class="laser-burn-effect">⛶ Pantalla Completa</a></li>
             </ul>
         </div>
     </nav>
 
     <header>
-        <h1>
-            <span id="header-line1"></span>
+        <h1 class="laser-burn-effect" id="header-line1-container">
+            <span id="header-line1" data-text="VISIÓN">VISIÓN</span>
         </h1>
         
-        <h1 class="arrow-02-text">
-            <span id="word-quimera">
+        <h1 class="arrow-02-text laser-burn-effect" id="word-quimera-container">
+            <span id="word-quimera" data-text="QUIMERA">
                 <span style="--i:1" class="hidden-letter">Q</span><span style="--i:2" class="hidden-letter">U</span><span style="--i:3" class="hidden-letter">I</span><span style="--i:4" class="hidden-letter">M</span><span style="--i:5" class="hidden-letter">E</span><span style="--i:6" class="hidden-letter">R</span><span style="--i:7" class="hidden-letter">A</span>
-            </span><span class="cursor" id="header-cursor"></span>
+            </span>
         </h1>
-        <p data-text="El origen simbólico y conceptual que da vida e identidad a nuestro ecosistema."></p>
+
+        <div class="subtitle-text laser-burn-effect" id="sub-text" data-text="Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.">Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.</div>
     </header>
 
     <main>
-        <div id="central-card" class="seq-card">
+        <div id="central-card" class="seq-card laser-burn-effect">
             <h2><span id="card-title-text"></span><span class="cursor" id="card-cursor"></span></h2>
         </div>
     </main>
 
+    <!-- MODAL PRINCIPAL -->
     <div id="main-modal" class="modal-overlay">
         <div class="modal-window" id="modal-window">
-            <h2 class="modal-title" id="modal-title"></h2>
+            <h2 class="modal-title laser-burn-effect" id="modal-title"></h2>
             <div class="modal-body" id="modal-body"></div>
             <div class="modal-close-wrapper">
-                <span class="modal-close-btn" id="modal-close-btn"></span><span class="cursor" id="modal-cursor"></span>
+                <span class="modal-close-btn laser-burn-effect" id="modal-close-btn">Cerrar.</span><span class="cursor" id="modal-cursor"></span>
             </div>
         </div>
     </div>
 
+    <!-- SUBMODAL (Modelo Helicoidal e Imágenes asociadas) -->
     <div id="sub-modal" class="submodal-overlay">
         <div class="submodal-content" id="submodal-content-wrapper">
             <span class="submodal-close" id="submodal-x-btn" onclick="closeSubModal()">&times;</span>
@@ -571,19 +724,34 @@
                 <h2 class="modal-title" id="sub-modal-title"></h2>
                 <div class="modal-body" id="sub-modal-body"></div>
                 <div class="modal-close-wrapper">
-                    <span class="modal-close-btn" id="sub-modal-close-btn"></span><span class="cursor" id="sub-modal-cursor"></span>
+                    <span class="modal-close-btn" id="sub-modal-close-btn">Cerrar.</span><span class="cursor" id="sub-modal-cursor"></span>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p data-text="&bull; &copy; 2026 Instituto Quimera. &bull; Centro de Investigación, Docencia, Servicio y Difusión. &bull; Dr.C. Cesar Cerezo Camacho. &bull; Todos los derechos reservados. &bull;"></p>
+    <footer class="laser-burn-effect" id="main-footer">
+        <p id="footer-text" data-text="&bull; &copy; 2026 Instituto Quimera. &bull; Centro de Investigación, Docencia, Servicio y Difusión. &bull; Dr.C. Cesar Cerezo Camacho. &bull; Todos los derechos reservados. &bull;"></p>
     </footer>
 
     <script>
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) window.location.reload();
+        });
+
+        const glitchImages = [
+            'glitch_Q.webp', 'glitch_U.webp', 'glitch_I.webp', 'glitch_M.webp', 'glitch_E.webp', 'glitch_R.webp', 'glitch_A.webp'
+        ];
+
+        // CONTROL DE MOVIMIENTO DEL CURSOR
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            document.documentElement.style.setProperty('--mouse-x', `${mouseX}px`);
+            document.documentElement.style.setProperty('--mouse-y', `${mouseY}px`);
         });
 
         const storyData = [
@@ -744,9 +912,13 @@
             const bgLayer = document.getElementById('bg-layer');
             if (bgLayer) bgLayer.style.opacity = '0';
 
+            const cursorGlow = document.getElementById('cursor-light-glow');
+            if (cursorGlow) cursorGlow.classList.remove('visible');
+
             const elementsToFade = [
-                document.getElementById('header-line1'),
-                document.querySelector('header p'),
+                document.getElementById('header-line1-container'),
+                document.getElementById('word-quimera-container'),
+                document.getElementById('sub-text'),
                 document.querySelector('.top-bar'),
                 document.getElementById('central-card'),
                 document.querySelector('footer')
@@ -876,34 +1048,26 @@
             }
         };
 
-        const typeHeaderTitle = async () => {
-            const line1Text = "VISIÓN";
-            const headerLine1 = document.getElementById('header-line1');
-            const wordQuimera = document.getElementById('word-quimera');
-            const headerCursor = document.getElementById('header-cursor');
-            const letterSpans = wordQuimera.querySelectorAll('.hidden-letter');
+        // FUNCIÓN DE GLITCH PREVIA AL MODAL
+        function triggerCardGlitch(callback) {
+            const glitchOverlay = document.getElementById('glitch-overlay');
+            const glitchImg = document.getElementById('glitch-img');
 
-            headerCursor.style.opacity = '1';
+            const randomGlitch = glitchImages[currentStep % glitchImages.length];
+            glitchImg.src = ''; 
+            glitchOverlay.style.opacity = '1';
 
-            let currentStr = '';
-            for (let i = 0; i < line1Text.length; i++) {
-                currentStr += line1Text.charAt(i);
-                headerLine1.innerHTML = currentStr;
-                headerLine1.appendChild(headerCursor);
-                await new Promise(r => setTimeout(r, 30));
-            }
+            setTimeout(() => {
+                glitchImg.src = randomGlitch;
+            }, 30);
 
-            await new Promise(r => setTimeout(r, 120));
-
-            for (let i = 0; i < letterSpans.length; i++) {
-                letterSpans[i].classList.add('revealed');
-                wordQuimera.insertBefore(headerCursor, letterSpans[i].nextSibling);
-                await new Promise(r => setTimeout(r, 70));
-            }
-
-            headerCursor.style.opacity = '0';
-            setTimeout(() => headerCursor.remove(), 500);
-        };
+            setTimeout(() => {
+                glitchOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    if (callback) callback();
+                }, 100); 
+            }, 750);
+        }
 
         centralCard.addEventListener('click', async () => {
             if (isCardBusy) return;
@@ -912,14 +1076,16 @@
                 triggerMatrixAndFadeElements();
             }
 
-            document.body.classList.add('modal-blur-active');
+            document.body.classList.add('blurring');
 
-            setTimeout(async () => {
+            triggerCardGlitch(async () => {
+                document.body.classList.remove('blurring');
                 mainModal.classList.add('show');
                 modalWindow.classList.remove('tv-off');
+                modalWindow.classList.add('tv-on');
                 modalTitle.innerHTML = '';
                 modalBody.innerHTML = '';
-                modalCloseBtn.innerHTML = '';
+                modalCloseBtn.innerHTML = 'Cerrar.';
                 modalCursor.style.opacity = '0';
                 isTyping = true;
 
@@ -951,18 +1117,19 @@
                     modalCursor.style.opacity = '1';
                     isTyping = false;
                 }
-            }, 300);
+            });
         });
 
         const triggerTVClose = () => {
             if (modalWindow.classList.contains('tv-off')) return;
             isTyping = false; 
             modalCursor.style.opacity = '0';
+            modalWindow.classList.remove('tv-on');
             modalWindow.classList.add('tv-off');
 
             setTimeout(async () => {
                 mainModal.classList.remove('show');
-                document.body.classList.remove('modal-blur-active');
+                modalWindow.classList.remove('tv-off');
                 
                 isCardBusy = true;
                 
@@ -978,7 +1145,7 @@
                         enableFinalHyperlink();
                     }, 500); 
                 }
-            }, 600);
+            }, 400);
         };
 
         modalCloseBtn.addEventListener('click', (e) => {
@@ -990,6 +1157,7 @@
             if (e.target === mainModal && !isTyping) triggerTVClose();
         });
 
+        /* --- CONTROL DE SUBMODALES Y SECUENCIA HELICOIDAL --- */
         const subModal = document.getElementById('sub-modal');
         const subImg = document.getElementById('submodal-img');
         const subModalTextWindow = document.getElementById('submodal-text-window');
@@ -1172,37 +1340,91 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
             fullscreenToggle.textContent = !document.fullscreenElement ? '⛶ Pantalla Completa' : '❌ Salir Pantalla Completa';
         });
 
-        /* --- ANIMACIÓN DE ENTRADA PRINCIPIO (BLANCO A NEGRO) Y SECUENCIA DE ELEMENTOS --- */
+        // SECUENCIA DE ENTRADA SINCRONIZADA CON EFECTOS LÁSER Y HOLOGRÁFICOS
         window.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('intro-overlay');
-            
-            // 1. Inicia el desvanecimiento de blanco a negro de la pantalla completa
-            setTimeout(() => {
+
+            async function runEntranceSequence() {
                 overlay.style.backgroundColor = '#000000';
-            }, 100);
+                await new Promise(r => setTimeout(r, 1000));
 
-            // 2. Una vez asentado el negro, se revela el fondo (bg-layer) y se remueve el overlay
-            setTimeout(() => {
                 document.getElementById('bg-layer').style.opacity = '1';
+                document.getElementById('cursor-light-glow').classList.add('visible');
                 overlay.style.opacity = '0';
-            }, 1300);
+                await new Promise(r => setTimeout(r, 1000));
 
-            // 3. Continúa el flujo sincronizado de animaciones
-            setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 2300);
-            
-            setTimeout(() => {
+                document.querySelector('.top-bar').style.opacity = '1';
+                await new Promise(r => setTimeout(r, 400));
+
                 const brandLogo = document.querySelector('.brand-logo');
-                const text = brandLogo.dataset.text;
-                let i = 0;
-                function typeBrandLogo() {
-                    if (i <= text.length) {
-                        brandLogo.innerHTML = text.substring(0, i);
-                        i++;
-                        setTimeout(typeBrandLogo, 25);
-                    }
+                brandLogo.textContent = brandLogo.dataset.text;
+                brandLogo.classList.add('active-laser');
+                await new Promise(r => setTimeout(r, 1200));
+                brandLogo.classList.remove('active-laser');
+                brandLogo.classList.add('revealed', 'hologram-mode');
+
+                const audioToggleBtn = document.getElementById('audio-toggle');
+                audioToggleBtn.classList.add('active-laser');
+                await new Promise(r => setTimeout(r, 1200));
+                audioToggleBtn.classList.remove('active-laser');
+                audioToggleBtn.classList.add('revealed', 'hologram-mode');
+
+                const fullscreenToggleBtn = document.getElementById('fullscreen-toggle');
+                fullscreenToggleBtn.classList.add('active-laser');
+                await new Promise(r => setTimeout(r, 1200));
+                fullscreenToggleBtn.classList.remove('active-laser');
+                fullscreenToggleBtn.classList.add('revealed', 'hologram-mode');
+
+                const line1Container = document.getElementById('header-line1-container');
+                line1Container.classList.add('active-laser');
+                await new Promise(r => setTimeout(r, 1200));
+                line1Container.classList.remove('active-laser');
+                line1Container.classList.add('revealed', 'hologram-mode');
+
+                const wordQuimeraContainer = document.getElementById('word-quimera-container');
+                wordQuimeraContainer.classList.add('active-laser');
+                await new Promise(r => setTimeout(r, 1200));
+                wordQuimeraContainer.classList.remove('active-laser');
+                wordQuimeraContainer.classList.add('revealed');
+
+                const letterSpans = document.querySelectorAll('.hidden-letter');
+                for (let i = 0; i < letterSpans.length; i++) {
+                    letterSpans[i].classList.add('revealed');
+                    letterSpans[i].style.color = '#c88b32';
+                    await new Promise(r => setTimeout(r, 120));
                 }
-                typeBrandLogo();
-            }, 2800);
+                for (let i = 0; i < letterSpans.length; i++) {
+                    letterSpans[i].style.color = '#ffffff';
+                    await new Promise(r => setTimeout(r, 80));
+                }
+                wordQuimeraContainer.classList.add('hologram-mode');
+
+                const subText = document.getElementById('sub-text');
+                subText.classList.add('active-laser');
+                await new Promise(r => setTimeout(r, 1200));
+                subText.classList.remove('active-laser');
+                subText.classList.add('revealed', 'hologram-mode');
+
+                centralCard.style.display = 'block';
+                centralCard.classList.add('active-laser');
+                await new Promise(r => setTimeout(r, 1200));
+                centralCard.classList.remove('active-laser');
+                centralCard.classList.add('revealed');
+                centralCard.classList.add('tv-on-card');
+
+                await typeCardTitle(storyData[0].title, 30);
+                isCardBusy = false;
+
+                const mainFooter = document.getElementById('main-footer');
+                const footerText = document.getElementById('footer-text');
+                footerText.textContent = footerText.dataset.text.replace('2026', new Date().getFullYear());
+                mainFooter.classList.add('active-laser');
+                await new Promise(r => setTimeout(r, 1200));
+                mainFooter.classList.remove('active-laser');
+                mainFooter.classList.add('revealed', 'hologram-mode');
+            }
+
+            runEntranceSequence();
 
             document.querySelector('.brand-logo').addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1214,52 +1436,6 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
                     window.location.href = "https://quimerac3.github.io/";
                 }, 1000);
             });
-
-            setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 3600);
-            
-            setTimeout(async () => { await typeHeaderTitle(); }, 3900);
-
-            setTimeout(async () => {
-                const subP = document.querySelector('header p');
-                await typeSection(subP, subP.dataset.text, 15);
-            }, 5300);
-            
-            setTimeout(() => {
-                centralCard.style.display = 'block';
-                centralCard.classList.add('tv-on-card');
-                
-                setTimeout(async () => {
-                    centralCard.classList.remove('tv-on-card');
-                    await typeCardTitle(storyData[0].title, 30);
-                    isCardBusy = false;
-
-                    document.querySelector('footer').classList.add('visible');
-
-                    setTimeout(() => {
-                        const footerPs = document.querySelectorAll('footer p');
-                        let pIndex = 0;
-                        function typeFooterP() {
-                            if (pIndex >= footerPs.length) return;
-                            let p = footerPs[pIndex];
-                            let text = p.dataset.text.replace('2026', new Date().getFullYear());
-                            let i = 0;
-                            function typeChar() {
-                                if (i <= text.length) {
-                                    p.innerHTML = text.substring(0, i);
-                                    i++;
-                                    setTimeout(typeChar, 18);
-                                } else {
-                                    pIndex++;
-                                    setTimeout(typeFooterP, 100);
-                                }
-                            }
-                            typeChar();
-                        }
-                        typeFooterP();
-                    }, 600);
-
-                }, 600);
-            }, 6300); 
         });
     </script>
 </body>
