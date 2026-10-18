@@ -976,14 +976,11 @@
             cardTitleContainer.classList.add('revealed');
         }
 
-        // Función reutilizable para animar la revelación de elementos mediante láser de forma limpia y ordenada
+        // Función reutilizable para revelar elementos con láser de manera limpia
         async function revealElementWithLaser(element) {
-            element.style.opacity = '0';
             element.classList.remove('revealed', 'active-laser');
-            // Forzar reflow para reiniciar la animación limpiamente
-            void element.offsetWidth;
-            
-            element.classList.add('active-laser');
+            void element.offsetWidth; // Forzar reflow para reiniciar la animación
+            element.classList.add('laser-burn-effect', 'active-laser');
             await new Promise(r => setTimeout(r, 1200));
             element.classList.remove('active-laser');
             element.classList.add('revealed');
@@ -1025,9 +1022,7 @@
                 modalWindow.classList.add('tv-on');
                 
                 modalTitle.textContent = '';
-                modalTitle.style.opacity = '0';
                 modalBody.innerHTML = '';
-                modalCloseBtn.style.opacity = '0';
                 modalCloseBtn.className = 'laser-burn-effect';
                 modalCloseBtn.textContent = 'Cerrar.';
                 isModalBusy = true;
@@ -1056,7 +1051,6 @@
                 // 3. Botón "Cerrar." con Láser al final de todo el texto
                 modalCloseBtn.textContent = 'Cerrar.';
                 await revealElementWithLaser(modalCloseBtn);
-                modalCloseBtn.className = 'modal-close-btn revealed';
                 
                 isModalBusy = false;
             });
@@ -1074,9 +1068,7 @@
                 
                 // Limpieza absoluta del contenido para evitar residuos visuales en el siguiente despliegue
                 modalTitle.textContent = '';
-                modalTitle.style.opacity = '0';
                 modalBody.innerHTML = '';
-                modalCloseBtn.style.opacity = '0';
                 modalCloseBtn.className = 'laser-burn-effect';
 
                 isCardBusy = true;
@@ -1174,9 +1166,7 @@
             subModalTextWindow.classList.add('tv-on');
 
             subModalTitle.textContent = '';
-            subModalTitle.style.opacity = '0';
             subModalBody.innerHTML = '';
-            subModalCloseBtn.style.opacity = '0';
             subModalCloseBtn.className = 'laser-burn-effect';
             subModalCloseBtn.textContent = 'Cerrar.';
             isSubModalBusy = true;
@@ -1208,7 +1198,6 @@
             // Botón "Cerrar." con láser al final de todo
             subModalCloseBtn.textContent = 'Cerrar.';
             await revealElementWithLaser(subModalCloseBtn);
-            subModalCloseBtn.className = 'modal-close-btn revealed';
 
             isSubModalBusy = false;
         };
@@ -1224,9 +1213,7 @@
                 
                 // Limpieza de estados visuales del submodal
                 subModalTitle.textContent = '';
-                subModalTitle.style.opacity = '0';
                 subModalBody.innerHTML = '';
-                subModalCloseBtn.style.opacity = '0';
                 subModalCloseBtn.className = 'laser-burn-effect';
 
                 subImg.style.opacity = '0';
