@@ -593,20 +593,6 @@
             color: #e0a96d;
         }
 
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: clamp(1rem, 2.5vw, 1.2rem);
-            background-color: var(--accent);
-            vertical-align: text-bottom;
-            animation: blink 1s step-end infinite;
-            margin-left: 2px;
-            opacity: 1; 
-            transition: opacity 0.3s ease;
-        }
-
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
         .submodal-content {
             position: relative;
             max-width: 90%;
@@ -722,7 +708,7 @@
             <h2 class="modal-title laser-burn-effect" id="modal-title"></h2>
             <div class="modal-body" id="modal-body"></div>
             <div class="modal-close-wrapper">
-                <span class="laser-burn-effect" id="modal-close-btn" style="display:inline-block;">Cerrar.</span><span class="cursor" id="modal-cursor"></span>
+                <span class="laser-burn-effect" id="modal-close-btn" style="display:inline-block;">Cerrar.</span>
             </div>
         </div>
     </div>
@@ -738,7 +724,7 @@
                 <h2 class="modal-title laser-burn-effect" id="sub-modal-title"></h2>
                 <div class="modal-body" id="sub-modal-body"></div>
                 <div class="modal-close-wrapper">
-                    <span class="laser-burn-effect" id="sub-modal-close-btn" style="display:inline-block;">Cerrar.</span><span class="cursor" id="sub-modal-cursor"></span>
+                    <span class="laser-burn-effect" id="sub-modal-close-btn" style="display:inline-block;">Cerrar.</span>
                 </div>
             </div>
         </div>
@@ -871,7 +857,6 @@
         const modalTitle = document.getElementById('modal-title');
         const modalBody = document.getElementById('modal-body');
         const modalCloseBtn = document.getElementById('modal-close-btn');
-        const modalCursor = document.getElementById('modal-cursor');
         
         let isModalBusy = false;
         let isCardBusy = true; 
@@ -1048,7 +1033,7 @@
                     await revealElementWithLaser(blockElem);
                 }
 
-                // 3. Botón "Cerrar." con Láser al final de todo el texto (con clase permanente para mantenerse visible)
+                // 3. Botón "Cerrar." con Láser al final de todo el texto
                 modalCloseBtn.textContent = 'Cerrar.';
                 await revealElementWithLaser(modalCloseBtn);
                 modalCloseBtn.className = 'modal-close-btn revealed';
@@ -1196,7 +1181,7 @@
                 await revealElementWithLaser(pElem);
             }
 
-            // Botón "Cerrar." con láser al final de todo (con clase permanente para mantenerse visible)
+            // Botón "Cerrar." con láser al final de todo
             subModalCloseBtn.textContent = 'Cerrar.';
             await revealElementWithLaser(subModalCloseBtn);
             subModalCloseBtn.className = 'modal-close-btn revealed';
