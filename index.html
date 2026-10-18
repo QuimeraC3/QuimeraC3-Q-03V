@@ -686,7 +686,7 @@
     </header>
 
     <main>
-        <div id="central-card" class="seq-card laser-burn-effect" data-text="TARJETA">
+        <div id="central-card" class="seq-card">
             <h2><span id="card-title-text"></span></h2>
         </div>
     </main>
@@ -942,7 +942,7 @@
 
         async function updateCardTitleLaser(text) {
             centralCard.classList.remove('revealed');
-            centralCard.classList.add('active-laser');
+            centralCard.classList.add('laser-burn-effect', 'active-laser');
             cardTitleText.textContent = text;
             
             await new Promise(r => setTimeout(r, 1200));
@@ -1331,15 +1331,17 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
                 subText.classList.remove('active-laser');
                 subText.classList.add('revealed', 'hologram-mode');
 
+                // 1. La tarjeta central aparece sola, sin título y con efecto de encendido de TV
                 centralCard.style.display = 'block';
-                centralCard.classList.add('active-laser');
-                cardTitleText.textContent = storyData[0].title;
-                await new Promise(r => setTimeout(r, 1200));
-                centralCard.classList.remove('active-laser');
-                centralCard.classList.add('revealed');
+                cardTitleText.textContent = ''; 
                 centralCard.classList.add('tv-on-card');
+                await new Promise(r => setTimeout(r, 600)); // Duración de la animación de la tarjeta
+
+                // 2. Solo después de animarse la tarjeta central, se anima el primer título con láser
+                await updateCardTitleLaser(storyData[0].title);
                 isCardBusy = false;
 
+                // 3. Después continúa la animación del footer
                 const mainFooter = document.getElementById('main-footer');
                 const footerText = document.getElementById('footer-text');
                 footerText.textContent = footerText.dataset.text.replace('2026', new Date().getFullYear());
