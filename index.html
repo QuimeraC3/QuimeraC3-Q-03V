@@ -1048,9 +1048,10 @@
                     await revealElementWithLaser(blockElem);
                 }
 
-                // 3. Botón "Cerrar." con Láser al final de todo el texto
+                // 3. Botón "Cerrar." con Láser al final de todo el texto (con clase permanente para mantenerse visible)
                 modalCloseBtn.textContent = 'Cerrar.';
                 await revealElementWithLaser(modalCloseBtn);
+                modalCloseBtn.className = 'modal-close-btn revealed';
                 
                 isModalBusy = false;
             });
@@ -1195,9 +1196,10 @@
                 await revealElementWithLaser(pElem);
             }
 
-            // Botón "Cerrar." con láser al final de todo
+            // Botón "Cerrar." con láser al final de todo (con clase permanente para mantenerse visible)
             subModalCloseBtn.textContent = 'Cerrar.';
             await revealElementWithLaser(subModalCloseBtn);
+            subModalCloseBtn.className = 'modal-close-btn revealed';
 
             isSubModalBusy = false;
         };
