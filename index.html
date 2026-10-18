@@ -385,15 +385,6 @@
             -webkit-text-stroke: 0.75px #000000;
         }
 
-        .hidden-letter {
-            opacity: 0;
-            display: inline-block;
-            transition: color 0.4s ease;
-        }
-        .hidden-letter.revealed {
-            opacity: 1;
-        }
-
         /* TARJETA CENTRAL */
         main {
             flex: 1;
@@ -684,22 +675,20 @@
     </nav>
 
     <header>
-        <h1 class="laser-burn-effect" id="header-line1-container">
-            <span id="header-line1" data-text="VISIÓN">VISIÓN</span>
+        <h1 class="laser-burn-effect" id="header-line1-container" data-text="VISIÓN">
+            <span id="header-line1">VISIÓN</span>
         </h1>
         
-        <h1 class="arrow-02-text laser-burn-effect" id="word-quimera-container">
-            <span id="word-quimera" data-text="QUIMERA">
-                <span style="--i:1" class="hidden-letter">Q</span><span style="--i:2" class="hidden-letter">U</span><span style="--i:3" class="hidden-letter">I</span><span style="--i:4" class="hidden-letter">M</span><span style="--i:5" class="hidden-letter">E</span><span style="--i:6" class="hidden-letter">R</span><span style="--i:7" class="hidden-letter">A</span>
-            </span>
+        <h1 class="arrow-02-text laser-burn-effect" id="word-quimera-container" data-text="QUIMERA">
+            <span id="word-quimera">QUIMERA</span>
         </h1>
 
         <div class="subtitle-text laser-burn-effect" id="sub-text" data-text="Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.">Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.</div>
     </header>
 
     <main>
-        <div id="central-card" class="seq-card laser-burn-effect">
-            <h2><span id="card-title-text"></span><span class="cursor" id="card-cursor"></span></h2>
+        <div id="central-card" class="seq-card laser-burn-effect" data-text="TARJETA">
+            <h2><span id="card-title-text"></span></h2>
         </div>
     </main>
 
@@ -850,7 +839,6 @@
         let currentStep = 0;
         const centralCard = document.getElementById('central-card');
         const cardTitleText = document.getElementById('card-title-text');
-        const cardCursor = document.getElementById('card-cursor');
         
         const mainModal = document.getElementById('main-modal');
         const modalWindow = document.getElementById('modal-window');
@@ -937,48 +925,10 @@
 
         function enableFinalHyperlink() {
             const wordContainer = document.getElementById('word-quimera');
-            const letters = wordContainer.querySelectorAll('span');
             wordContainer.style.cursor = 'pointer';
-
-            const stepTime = 120;
-
-            function runSequence() {
-                let i = 0;
-                function turnCopperGold(callback) {
-                    if (i < letters.length) {
-                        letters[i].style.color = '#c88b32';
-                        i++;
-                        globalColorInterval = setTimeout(() => turnCopperGold(callback), stepTime);
-                    } else if (callback) {
-                        callback();
-                    }
-                }
-
-                let j = 0;
-                function turnWhite(callback) {
-                    if (j < letters.length) {
-                        letters[j].style.color = '#ffffff';
-                        j++;
-                        globalColorInterval = setTimeout(() => turnWhite(callback), stepTime);
-                    } else if (callback) {
-                        callback();
-                    }
-                }
-
-                turnCopperGold(() => {
-                    i = 0;
-                    turnWhite(() => {
-                        j = 0;
-                        globalColorInterval = setTimeout(runSequence, 0);
-                    });
-                });
-            }
-
-            runSequence();
 
             wordContainer.onclick = () => {
                 clearTimeout(globalColorInterval);
-
                 document.body.classList.add('blurring');
 
                 const overlay = document.getElementById('intro-overlay');
@@ -991,24 +941,15 @@
             };
         }
 
-        const typeCardTitle = async (text, speed = 25) => {
-            cardCursor.style.opacity = '1';
-            let currentStr = '';
-            for (let i = 0; i < text.length; i++) {
-                currentStr += text.charAt(i);
-                cardTitleText.innerHTML = currentStr;
-                await new Promise(r => setTimeout(r, speed));
-            }
-        };
-
-        const eraseCardTitle = async (speed = 15) => {
-            cardCursor.style.opacity = '1';
-            let currentStr = cardTitleText.innerHTML;
-            for (let i = currentStr.length; i >= 0; i--) {
-                cardTitleText.innerHTML = currentStr.substring(0, i);
-                await new Promise(r => setTimeout(r, speed));
-            }
-        };
+        async function updateCardTitleLaser(text) {
+            centralCard.classList.remove('revealed');
+            centralCard.classList.add('active-laser');
+            cardTitleText.textContent = text;
+            
+            await new Promise(r => setTimeout(r, 1200));
+            centralCard.classList.remove('active-laser');
+            centralCard.classList.add('revealed', 'card-hologram-glow');
+        }
 
         const typeSection = async (element, text, speed) => {
             let i = 0;
@@ -1048,7 +989,6 @@
             }
         };
 
-        // FUNCIÓN DE GLITCH PREVIA AL MODAL
         function triggerCardGlitch(callback) {
             const glitchOverlay = document.getElementById('glitch-overlay');
             const glitchImg = document.getElementById('glitch-img');
@@ -1134,9 +1074,8 @@
                 isCardBusy = true;
                 
                 if (currentStep < storyData.length - 1) {
-                    await eraseCardTitle(20);
                     currentStep++;
-                    await typeCardTitle(storyData[currentStep].title, 30);
+                    await updateCardTitleLaser(storyData[currentStep].title);
                     isCardBusy = false; 
                 } else {
                     centralCard.classList.add('tv-off-card');
@@ -1385,19 +1324,7 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
                 wordQuimeraContainer.classList.add('active-laser');
                 await new Promise(r => setTimeout(r, 1200));
                 wordQuimeraContainer.classList.remove('active-laser');
-                wordQuimeraContainer.classList.add('revealed');
-
-                const letterSpans = document.querySelectorAll('.hidden-letter');
-                for (let i = 0; i < letterSpans.length; i++) {
-                    letterSpans[i].classList.add('revealed');
-                    letterSpans[i].style.color = '#c88b32';
-                    await new Promise(r => setTimeout(r, 120));
-                }
-                for (let i = 0; i < letterSpans.length; i++) {
-                    letterSpans[i].style.color = '#ffffff';
-                    await new Promise(r => setTimeout(r, 80));
-                }
-                wordQuimeraContainer.classList.add('hologram-mode');
+                wordQuimeraContainer.classList.add('revealed', 'hologram-mode');
 
                 const subText = document.getElementById('sub-text');
                 subText.classList.add('active-laser');
@@ -1407,12 +1334,11 @@ Resolver un problema no es el final del conocimiento; es el comienzo de una preg
 
                 centralCard.style.display = 'block';
                 centralCard.classList.add('active-laser');
+                cardTitleText.textContent = storyData[0].title;
                 await new Promise(r => setTimeout(r, 1200));
                 centralCard.classList.remove('active-laser');
                 centralCard.classList.add('revealed');
                 centralCard.classList.add('tv-on-card');
-
-                await typeCardTitle(storyData[0].title, 30);
                 isCardBusy = false;
 
                 const mainFooter = document.getElementById('main-footer');
