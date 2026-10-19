@@ -963,16 +963,16 @@
             cardTitleContainer.classList.add('revealed');
         }
 
-        // FUNCIÓN DE ANIMACIÓN ESCALONADA CON SOLAPAMIENTO (OVERLAPPING STAGGERED)
-        async function showModalWithOverlap(titleText, contentData) {
-            modalTitle.textContent = titleText;
-            modalBody.innerHTML = '';
-            modalCloseBtn.className = 'laser-burn-effect';
-            modalCloseBtn.textContent = 'Cerrar.';
+        // FUNCIÓN AUXILIAR DE ANIMACIÓN ESCALONADA CON SOLAPAMIENTO RESPETANDO CONTENEDORES
+        async function animateModalContent(titleElem, bodyElem, closeElem, titleText, contentData) {
+            titleElem.textContent = titleText;
+            bodyElem.innerHTML = '';
+            closeElem.className = 'laser-burn-effect';
+            closeElem.textContent = 'Cerrar.';
 
-            const elementsToAnimate = [modalTitle];
+            const elementsToAnimate = [titleElem];
 
-            // 1. Construir e insertar todos los elementos de golpe en el DOM sin bloquearnos
+            // 1. Insertar bloques de contenido en el cuerpo del modal
             for (let block of contentData) {
                 const blockElem = document.createElement(block.type === 'flow' ? 'div' : 'p');
                 if (block.type === 'flow') {
@@ -982,31 +982,30 @@
                     blockElem.style.marginBottom = '1rem';
                 }
                 blockElem.textContent = block.text;
-                modalBody.appendChild(blockElem);
+                bodyElem.appendChild(blockElem);
                 elementsToAnimate.push(blockElem);
             }
 
-            // Agregar el botón cerrar al final de la lista de elementos
-            modalBody.appendChild(modalCloseBtn);
-            elementsToAnimate.push(modalCloseBtn);
+            // 2. Incluir el botón de cierre (mantiene su contenedor .modal-close-wrapper alineado a la derecha)
+            elementsToAnimate.push(closeElem);
 
             await new Promise(r => setTimeout(r, 100));
 
-            // 2. Disparar los láseres con solapamiento secuencial rápido (250ms de desfase)
+            // 3. Disparar los láseres con solapamiento secuencial rápido (250ms de desfase)
             for (let el of elementsToAnimate) {
                 el.classList.add('active-laser');
-                await new Promise(r => setTimeout(r, 250)); // Desfase traslapado rápido
+                await new Promise(r => setTimeout(r, 250));
             }
 
-            // Esperar a que concluya la última animación láser en curso
+            // Esperar a que concluya la última animación láser
             await new Promise(r => setTimeout(r, 600));
 
-            // Fijar el estado revelado definitivo a todos
+            // Fijar el estado revelado definitivo
             for (let el of elementsToAnimate) {
                 el.classList.remove('active-laser');
                 el.classList.add('revealed');
             }
-            modalCloseBtn.className = 'modal-close-btn revealed';
+            closeElem.className = 'modal-close-btn revealed';
         }
 
         function triggerCardGlitch(callback) {
@@ -1049,8 +1048,8 @@
                 const data = storyData[currentStep];
                 modalBody.style.textAlign = data.align || 'left';
                 
-                // Aplicar la animación traslapada en el modal principal
-                await showModalWithOverlap(data.title, data.content);
+                // Animación traslapada para el modal principal
+                await animateModalContent(modalTitle, modalBody, modalCloseBtn, data.title, data.content);
                 
                 isModalBusy = false;
             });
@@ -1176,8 +1175,8 @@
 
             const formattedContent = paragraphs.map(text => ({ type: 'p', text: text }));
             
-            // Aplicar la misma animación traslapada en la ventana de texto del submodal
-            await showModalWithOverlap("MODELO HELICOIDAL DEL DESARROLLO DEL CONOCIMIENTO.", formattedContent);
+            // Animación traslapada apuntando correctamente a los elementos del submodal
+            await animateModalContent(subModalTitle, subModalBody, subModalCloseBtn, "MODELO HELICOIDAL DEL DESARROLLO DEL CONOCIMIENTO.", formattedContent);
 
             isSubModalBusy = false;
         };
