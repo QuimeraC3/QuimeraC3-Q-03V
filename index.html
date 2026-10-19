@@ -259,7 +259,7 @@
             color: #ffffff;
         }
 
-        /* EFECTO LÁSER COMÚN */
+        /* EFECTO LÁSER COMÚN (ACELERADO A 0.6s) */
         .laser-burn-effect {
             opacity: 0;
             clip-path: inset(0 100% 0 0);
@@ -268,7 +268,7 @@
 
         .laser-burn-effect.active-laser {
             opacity: 1;
-            animation: hyperLaserReveal 1.2s cubic-bezier(0.15, 1, 0.2, 1) forwards;
+            animation: hyperLaserReveal 0.6s cubic-bezier(0.15, 1, 0.2, 1) forwards;
         }
 
         .laser-burn-effect.revealed {
@@ -285,7 +285,7 @@
             width: 16px;
             background: radial-gradient(circle, #ffffff 0%, #38bdf8 40%, #c88b32 80%, transparent 100%);
             box-shadow: 0 0 35px #38bdf8, 0 0 70px #fffbeb, 0 0 100px #c88b32, inset 0 0 15px #ffffff;
-            animation: hyperLaserBarMove 1.2s cubic-bezier(0.15, 1, 0.2, 1) forwards;
+            animation: hyperLaserBarMove 0.6s cubic-bezier(0.15, 1, 0.2, 1) forwards;
             z-index: 15;
             filter: blur(0.5px);
         }
@@ -301,7 +301,7 @@
             pointer-events: none;
             background: linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(56,189,248,0.6) 30%, rgba(200,139,50,0.3) 60%, transparent 100%);
             mix-blend-mode: color-dodge;
-            animation: hyperLaserSparksWave 1.2s cubic-bezier(0.15, 1, 0.2, 1) forwards;
+            animation: hyperLaserSparksWave 0.6s cubic-bezier(0.15, 1, 0.2, 1) forwards;
             z-index: 12;
         }
 
@@ -958,17 +958,17 @@
             cardTitleContainer.classList.add('active-laser');
             cardTitleText.textContent = text;
             
-            await new Promise(r => setTimeout(r, 1200));
+            await new Promise(r => setTimeout(r, 600)); // Acelerado a 600ms
             cardTitleContainer.classList.remove('active-laser');
             cardTitleContainer.classList.add('revealed');
         }
 
-        // Función reutilizable para revelar elementos con láser de manera limpia
+        // Función reutilizable para revelar elementos con láser de manera ágil (600ms)
         async function revealElementWithLaser(element) {
             element.classList.remove('revealed', 'active-laser');
             void element.offsetWidth; // Forzar reflow para reiniciar la animación
             element.classList.add('laser-burn-effect', 'active-laser');
-            await new Promise(r => setTimeout(r, 1200));
+            await new Promise(r => setTimeout(r, 600)); // Reducido de 1200 a 600ms
             element.classList.remove('active-laser');
             element.classList.add('revealed');
         }
@@ -1017,11 +1017,11 @@
                 const data = storyData[currentStep];
                 modalBody.style.textAlign = data.align || 'left';
                 
-                // 1. Título con Láser
+                // 1. Título con Láser ágil
                 modalTitle.textContent = data.title;
                 await revealElementWithLaser(modalTitle);
                 
-                // 2. Bloques de texto con Láser secuencial
+                // 2. Bloques de texto secuenciales más rápidos
                 for (let block of data.content) {
                     const blockElem = document.createElement(block.type === 'flow' ? 'div' : 'p');
                     if (block.type === 'flow') {
@@ -1035,7 +1035,7 @@
                     await revealElementWithLaser(blockElem);
                 }
 
-                // 3. Botón "Cerrar." con Láser al final de todo el texto
+                // 3. Botón "Cerrar." al final
                 modalCloseBtn.textContent = 'Cerrar.';
                 await revealElementWithLaser(modalCloseBtn);
                 modalCloseBtn.className = 'modal-close-btn revealed';
@@ -1054,7 +1054,6 @@
                 mainModal.classList.remove('show');
                 modalWindow.classList.remove('tv-off');
                 
-                // Limpieza absoluta del contenido para evitar residuos visuales en el siguiente despliegue
                 modalTitle.textContent = '';
                 modalBody.innerHTML = '';
                 modalCloseBtn.className = 'laser-burn-effect';
@@ -1121,7 +1120,7 @@
             for (let i = 0; i < images.length; i++) {
                 if (!helicoidalSequenceRunning) return;
                 subImg.style.opacity = '0';
-                await new Promise(r => setTimeout(r, 800));
+                await new Promise(r => setTimeout(r, 600));
                 
                 if (!helicoidalSequenceRunning) return;
                 subImg.src = images[i];
@@ -1133,12 +1132,12 @@
                 
                 if (!helicoidalSequenceRunning) return;
                 subImg.style.opacity = '1';
-                await new Promise(r => setTimeout(r, 3000));
+                await new Promise(r => setTimeout(r, 2000)); // Duración de visualización de imagen optimizada
 
                 if (!helicoidalSequenceRunning) return;
                 if (i === images.length - 1) {
                     subImg.style.opacity = '0';
-                    await new Promise(r => setTimeout(r, 800));
+                    await new Promise(r => setTimeout(r, 600));
                     if (!helicoidalSequenceRunning) return;
                     showHelicoidalTextWindow();
                     return;
@@ -1167,13 +1166,13 @@
                 "Resolver un problema no es el final del conocimiento; es el comienzo de una pregunta mejor."
             ];
 
-            await new Promise(r => setTimeout(r, 400));
+            await new Promise(r => setTimeout(r, 300));
 
             // Título
             subModalTitle.textContent = "MODELO HELICOIDAL DEL DESARROLLO DEL CONOCIMIENTO.";
             await revealElementWithLaser(subModalTitle);
 
-            // Contenido en párrafos con láser
+            // Contenido en párrafos con láser ágil
             for (let text of paragraphs) {
                 const pElem = document.createElement('p');
                 pElem.className = 'laser-burn-effect';
@@ -1183,7 +1182,7 @@
                 await revealElementWithLaser(pElem);
             }
 
-            // Botón "Cerrar." con láser al final de todo
+            // Botón "Cerrar."
             subModalCloseBtn.textContent = 'Cerrar.';
             await revealElementWithLaser(subModalCloseBtn);
             subModalCloseBtn.className = 'modal-close-btn revealed';
@@ -1200,7 +1199,6 @@
                 subModalTextWindow.style.display = 'none';
                 subModalTextWindow.classList.remove('tv-off');
                 
-                // Limpieza de estados visuales del submodal
                 subModalTitle.textContent = '';
                 subModalBody.innerHTML = '';
                 subModalCloseBtn.className = 'laser-burn-effect';
@@ -1277,83 +1275,77 @@
             fullscreenToggle.textContent = !document.fullscreenElement ? '⛶ Pantalla Completa' : '❌ Salir Pantalla Completa';
         });
 
-        // SECUENCIA DE ENTRADA SINCRONIZADA CON DESVANECIMIENTO BLANCO -> NEGRO Y LÁSER
+        // SECUENCIA DE ENTRADA GENERAL MÁS ÁGIL
         window.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('intro-overlay');
 
             async function runEntranceSequence() {
-                // 1. Iniciar en blanco total
                 overlay.style.backgroundColor = '#ffffff';
                 overlay.style.opacity = '1';
-                await new Promise(r => setTimeout(r, 200));
+                await new Promise(r => setTimeout(r, 150));
 
-                // 2. Transición suave de blanco hacia el negro
                 overlay.style.backgroundColor = '#000000';
-                await new Promise(r => setTimeout(r, 1200)); // Esperar a que concluya la transición de color
+                await new Promise(r => setTimeout(r, 600)); // Transición de color optimizada
 
                 document.getElementById('bg-layer').style.opacity = '1';
                 document.getElementById('cursor-light-glow').classList.add('visible');
                 
-                // 3. Desvanecer la capa negra para revelar el contenido
                 overlay.style.opacity = '0';
-                await new Promise(r => setTimeout(r, 1000));
+                await new Promise(r => setTimeout(r, 500));
 
                 document.querySelector('.top-bar').style.opacity = '1';
-                await new Promise(r => setTimeout(r, 400));
+                await new Promise(r => setTimeout(r, 200));
 
                 const brandLogo = document.querySelector('.brand-logo');
                 brandLogo.textContent = brandLogo.dataset.text;
                 brandLogo.classList.add('active-laser');
-                await new Promise(r => setTimeout(r, 1200));
+                await new Promise(r => setTimeout(r, 600));
                 brandLogo.classList.remove('active-laser');
                 brandLogo.classList.add('revealed', 'hologram-mode');
 
                 const audioToggleBtn = document.getElementById('audio-toggle');
                 audioToggleBtn.classList.add('active-laser');
-                await new Promise(r => setTimeout(r, 1200));
+                await new Promise(r => setTimeout(r, 600));
                 audioToggleBtn.classList.remove('active-laser');
                 audioToggleBtn.classList.add('revealed', 'hologram-mode');
 
                 const fullscreenToggleBtn = document.getElementById('fullscreen-toggle');
                 fullscreenToggleBtn.classList.add('active-laser');
-                await new Promise(r => setTimeout(r, 1200));
+                await new Promise(r => setTimeout(r, 600));
                 fullscreenToggleBtn.classList.remove('active-laser');
                 fullscreenToggleBtn.classList.add('revealed', 'hologram-mode');
 
                 const line1Container = document.getElementById('header-line1-container');
                 line1Container.classList.add('active-laser');
-                await new Promise(r => setTimeout(r, 1200));
+                await new Promise(r => setTimeout(r, 600));
                 line1Container.classList.remove('active-laser');
                 line1Container.classList.add('revealed', 'hologram-mode');
 
                 const wordQuimeraContainer = document.getElementById('word-quimera-container');
                 wordQuimeraContainer.classList.add('active-laser');
-                await new Promise(r => setTimeout(r, 1200));
+                await new Promise(r => setTimeout(r, 600));
                 wordQuimeraContainer.classList.remove('active-laser');
                 wordQuimeraContainer.classList.add('revealed', 'hologram-mode');
 
                 const subText = document.getElementById('sub-text');
                 subText.classList.add('active-laser');
-                await new Promise(r => setTimeout(r, 1200));
+                await new Promise(r => setTimeout(r, 600));
                 subText.classList.remove('active-laser');
                 subText.classList.add('revealed', 'hologram-mode');
 
-                // 4. La tarjeta central aparece una sola vez vacía con efecto de TV
                 centralCard.style.display = 'block';
                 cardTitleText.textContent = ''; 
                 centralCard.classList.add('tv-on-card');
-                await new Promise(r => setTimeout(r, 600));
+                await new Promise(r => setTimeout(r, 400));
 
-                // 5. Después se anima únicamente el primer título con efecto láser
                 await updateCardTitleLaser(storyData[0].title);
                 isCardBusy = false;
 
-                // 6. Finalmente continúa la animación del footer
                 const mainFooter = document.getElementById('main-footer');
                 const footerText = document.getElementById('footer-text');
                 footerText.textContent = footerText.dataset.text.replace('2026', new Date().getFullYear());
                 mainFooter.classList.add('active-laser');
-                await new Promise(r => setTimeout(r, 1200));
+                await new Promise(r => setTimeout(r, 600));
                 mainFooter.classList.remove('active-laser');
                 mainFooter.classList.add('revealed', 'hologram-mode');
             }
