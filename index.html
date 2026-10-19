@@ -958,19 +958,55 @@
             cardTitleContainer.classList.add('active-laser');
             cardTitleText.textContent = text;
             
-            await new Promise(r => setTimeout(r, 600)); // Acelerado a 600ms
+            await new Promise(r => setTimeout(r, 600));
             cardTitleContainer.classList.remove('active-laser');
             cardTitleContainer.classList.add('revealed');
         }
 
-        // Función reutilizable para revelar elementos con láser de manera ágil (600ms)
-        async function revealElementWithLaser(element) {
-            element.classList.remove('revealed', 'active-laser');
-            void element.offsetWidth; // Forzar reflow para reiniciar la animación
-            element.classList.add('laser-burn-effect', 'active-laser');
-            await new Promise(r => setTimeout(r, 600)); // Reducido de 1200 a 600ms
-            element.classList.remove('active-laser');
-            element.classList.add('revealed');
+        // FUNCIÓN DE ANIMACIÓN ESCALONADA CON SOLAPAMIENTO (OVERLAPPING STAGGERED)
+        async function showModalWithOverlap(titleText, contentData) {
+            modalTitle.textContent = titleText;
+            modalBody.innerHTML = '';
+            modalCloseBtn.className = 'laser-burn-effect';
+            modalCloseBtn.textContent = 'Cerrar.';
+
+            const elementsToAnimate = [modalTitle];
+
+            // 1. Construir e insertar todos los elementos de golpe en el DOM sin bloquearnos
+            for (let block of contentData) {
+                const blockElem = document.createElement(block.type === 'flow' ? 'div' : 'p');
+                if (block.type === 'flow') {
+                    blockElem.className = 'process-flow laser-burn-effect';
+                } else {
+                    blockElem.className = 'laser-burn-effect';
+                    blockElem.style.marginBottom = '1rem';
+                }
+                blockElem.textContent = block.text;
+                modalBody.appendChild(blockElem);
+                elementsToAnimate.push(blockElem);
+            }
+
+            // Agregar el botón cerrar al final de la lista de elementos
+            modalBody.appendChild(modalCloseBtn);
+            elementsToAnimate.push(modalCloseBtn);
+
+            await new Promise(r => setTimeout(r, 100));
+
+            // 2. Disparar los láseres con solapamiento secuencial rápido (250ms de desfase)
+            for (let el of elementsToAnimate) {
+                el.classList.add('active-laser');
+                await new Promise(r => setTimeout(r, 250)); // Desfase traslapado rápido
+            }
+
+            // Esperar a que concluya la última animación láser en curso
+            await new Promise(r => setTimeout(r, 600));
+
+            // Fijar el estado revelado definitivo a todos
+            for (let el of elementsToAnimate) {
+                el.classList.remove('active-laser');
+                el.classList.add('revealed');
+            }
+            modalCloseBtn.className = 'modal-close-btn revealed';
         }
 
         function triggerCardGlitch(callback) {
@@ -1008,37 +1044,13 @@
                 modalWindow.classList.remove('tv-off');
                 modalWindow.classList.add('tv-on');
                 
-                modalTitle.textContent = '';
-                modalBody.innerHTML = '';
-                modalCloseBtn.className = 'laser-burn-effect';
-                modalCloseBtn.textContent = 'Cerrar.';
                 isModalBusy = true;
 
                 const data = storyData[currentStep];
                 modalBody.style.textAlign = data.align || 'left';
                 
-                // 1. Título con Láser ágil
-                modalTitle.textContent = data.title;
-                await revealElementWithLaser(modalTitle);
-                
-                // 2. Bloques de texto secuenciales más rápidos
-                for (let block of data.content) {
-                    const blockElem = document.createElement(block.type === 'flow' ? 'div' : 'p');
-                    if (block.type === 'flow') {
-                        blockElem.className = 'process-flow laser-burn-effect';
-                    } else {
-                        blockElem.className = 'laser-burn-effect';
-                        blockElem.style.marginBottom = '1rem';
-                    }
-                    blockElem.textContent = block.text;
-                    modalBody.appendChild(blockElem);
-                    await revealElementWithLaser(blockElem);
-                }
-
-                // 3. Botón "Cerrar." al final
-                modalCloseBtn.textContent = 'Cerrar.';
-                await revealElementWithLaser(modalCloseBtn);
-                modalCloseBtn.className = 'modal-close-btn revealed';
+                // Aplicar la animación traslapada en el modal principal
+                await showModalWithOverlap(data.title, data.content);
                 
                 isModalBusy = false;
             });
@@ -1132,7 +1144,7 @@
                 
                 if (!helicoidalSequenceRunning) return;
                 subImg.style.opacity = '1';
-                await new Promise(r => setTimeout(r, 2000)); // Duración de visualización de imagen optimizada
+                await new Promise(r => setTimeout(r, 2000));
 
                 if (!helicoidalSequenceRunning) return;
                 if (i === images.length - 1) {
@@ -1152,10 +1164,6 @@
             subModalTextWindow.classList.remove('tv-off');
             subModalTextWindow.classList.add('tv-on');
 
-            subModalTitle.textContent = '';
-            subModalBody.innerHTML = '';
-            subModalCloseBtn.className = 'laser-burn-effect';
-            subModalCloseBtn.textContent = 'Cerrar.';
             isSubModalBusy = true;
 
             const paragraphs = [
@@ -1166,26 +1174,10 @@
                 "Resolver un problema no es el final del conocimiento; es el comienzo de una pregunta mejor."
             ];
 
-            await new Promise(r => setTimeout(r, 300));
-
-            // Título
-            subModalTitle.textContent = "MODELO HELICOIDAL DEL DESARROLLO DEL CONOCIMIENTO.";
-            await revealElementWithLaser(subModalTitle);
-
-            // Contenido en párrafos con láser ágil
-            for (let text of paragraphs) {
-                const pElem = document.createElement('p');
-                pElem.className = 'laser-burn-effect';
-                pElem.style.marginBottom = '1rem';
-                pElem.textContent = text;
-                subModalBody.appendChild(pElem);
-                await revealElementWithLaser(pElem);
-            }
-
-            // Botón "Cerrar."
-            subModalCloseBtn.textContent = 'Cerrar.';
-            await revealElementWithLaser(subModalCloseBtn);
-            subModalCloseBtn.className = 'modal-close-btn revealed';
+            const formattedContent = paragraphs.map(text => ({ type: 'p', text: text }));
+            
+            // Aplicar la misma animación traslapada en la ventana de texto del submodal
+            await showModalWithOverlap("MODELO HELICOIDAL DEL DESARROLLO DEL CONOCIMIENTO.", formattedContent);
 
             isSubModalBusy = false;
         };
@@ -1275,7 +1267,7 @@
             fullscreenToggle.textContent = !document.fullscreenElement ? '⛶ Pantalla Completa' : '❌ Salir Pantalla Completa';
         });
 
-        // SECUENCIA DE ENTRADA GENERAL MÁS ÁGIL
+        // SECUENCIA DE ENTRADA GENERAL
         window.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('intro-overlay');
 
@@ -1285,7 +1277,7 @@
                 await new Promise(r => setTimeout(r, 150));
 
                 overlay.style.backgroundColor = '#000000';
-                await new Promise(r => setTimeout(r, 600)); // Transición de color optimizada
+                await new Promise(r => setTimeout(r, 600));
 
                 document.getElementById('bg-layer').style.opacity = '1';
                 document.getElementById('cursor-light-glow').classList.add('visible');
