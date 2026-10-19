@@ -691,10 +691,12 @@
     </nav>
 
     <header>
+        <!-- Título VISIÓN con animación de permanencia y halo holográfico integrado -->
         <h1 class="laser-burn-effect" id="header-line1-container" data-text="VISIÓN">
             <span id="header-line1">VISIÓN</span>
         </h1>
         
+        <!-- Título QUIMERA con animación de permanencia y halo holográfico integrado -->
         <h1 class="arrow-02-text laser-burn-effect" id="word-quimera-container" data-text="QUIMERA">
             <span id="word-quimera">QUIMERA</span>
         </h1>
@@ -767,7 +769,7 @@
                 content: [
                     { type: 'p', text: "QUIMERA aspira a consolidarse como un ecosistema científico, académico y profesional capaz de conectar conocimiento, disciplinas, personas, metodologías y tecnología para abordar problemas complejos y convertirlos en oportunidades de desarrollo." },
                     { type: 'p', text: "No buscamos únicamente crecer:\nBUSCAMOS EVOLUCIONAR." },
-                    { type: 'p', text: "Evolucionar en la manera de investigar, aprender, enseñar, comunicar, desarrollar herramientas, resolver problems y transferir conocimiento." },
+                    { type: 'p', text: "Evolucionar en la manera de investigar, aprender, enseñar, comunicar, desarrollar herramientas, resolver problemas y transferir conocimiento." },
                     { type: 'p', text: "NUESTRA VISIÓN PARTE DE UNA CONVICCIÓN:\nEl futuro del conocimiento no depende solamente de cuánto sabemos, sino de nuestra capacidad para conectar aquello que sabemos." }
                 ]
             },
@@ -1311,12 +1313,14 @@
                 fullscreenToggleBtn.classList.remove('active-laser');
                 fullscreenToggleBtn.classList.add('revealed', 'hologram-mode');
 
+                // Animación láser y activación del halo holográfico permanente para "VISIÓN"
                 const line1Container = document.getElementById('header-line1-container');
                 line1Container.classList.add('active-laser');
                 await new Promise(r => setTimeout(r, 600));
                 line1Container.classList.remove('active-laser');
                 line1Container.classList.add('revealed', 'hologram-mode');
 
+                // Animación láser y activación del halo holográfico permanente para "QUIMERA"
                 const wordQuimeraContainer = document.getElementById('word-quimera-container');
                 wordQuimeraContainer.classList.add('active-laser');
                 await new Promise(r => setTimeout(r, 600));
@@ -1338,7 +1342,7 @@
                 isCardBusy = false;
 
                 const mainFooter = document.getElementById('main-footer');
-                const footerText = document.getElementById('footer-text');
+            const footerText = document.getElementById('footer-text');
                 footerText.textContent = footerText.dataset.text.replace('2026', new Date().getFullYear());
                 mainFooter.classList.add('active-laser');
                 await new Promise(r => setTimeout(r, 600));
