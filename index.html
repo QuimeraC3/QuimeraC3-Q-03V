@@ -402,7 +402,7 @@
             -webkit-text-stroke: 0.5px #000000;
         }
 
-        /* TARJETA CENTRAL */
+        /* TARJETA CENTRAL CON EFECTO DE LUZ RGB POSTERIOR (Hologram Box Glow) */
         main {
             flex: 1;
             display: flex;
@@ -440,7 +440,11 @@
 
         .seq-card:hover { transform: translateY(20px) scale(1.05); }
 
-        .tv-on-card { animation: tvTurnOnCard 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .tv-on-card { 
+            animation: tvTurnOnCard 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards, hologramBoxGlow 3s ease-in-out infinite alternate; 
+            animation-delay: 0s, 0.6s;
+        }
+        
         .tv-off-card { animation: tvTurnOffCard 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
 
         @keyframes tvTurnOnCard {
@@ -763,7 +767,7 @@
                 content: [
                     { type: 'p', text: "QUIMERA aspira a consolidarse como un ecosistema científico, académico y profesional capaz de conectar conocimiento, disciplinas, personas, metodologías y tecnología para abordar problemas complejos y convertirlos en oportunidades de desarrollo." },
                     { type: 'p', text: "No buscamos únicamente crecer:\nBUSCAMOS EVOLUCIONAR." },
-                    { type: 'p', text: "Evolucionar en la manera de investigar, aprender, enseñar, comunicar, desarrollar herramientas, resolver problemas y transferir conocimiento." },
+                    { type: 'p', text: "Evolucionar en la manera de investigar, aprender, enseñar, comunicar, desarrollar herramientas, resolver problems y transferir conocimiento." },
                     { type: 'p', text: "NUESTRA VISIÓN PARTE DE UNA CONVICCIÓN:\nEl futuro del conocimiento no depende solamente de cuánto sabemos, sino de nuestra capacidad para conectar aquello que sabemos." }
                 ]
             },
