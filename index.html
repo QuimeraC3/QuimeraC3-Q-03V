@@ -368,7 +368,7 @@
             font-size: clamp(2.0rem, 09vw, 5rem); 
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #ffffff;
-            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+            /* text-shadow retirado de aquí para permitir que herede el brillo holográfico animado del padre */
             margin-top: 2rem;
         }
 
@@ -383,7 +383,7 @@
             letter-spacing: 0.25em;
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #000000;
-            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+            /* text-shadow retirado de aquí para permitir que herede el brillo holográfico animado del padre */
             color: #ffffff;
         }
 
@@ -691,12 +691,10 @@
     </nav>
 
     <header>
-        <!-- Título VISIÓN con animación de permanencia y halo holográfico integrado -->
         <h1 class="laser-burn-effect" id="header-line1-container" data-text="VISIÓN">
             <span id="header-line1">VISIÓN</span>
         </h1>
         
-        <!-- Título QUIMERA con animación de permanencia y halo holográfico integrado -->
         <h1 class="arrow-02-text laser-burn-effect" id="word-quimera-container" data-text="QUIMERA">
             <span id="word-quimera">QUIMERA</span>
         </h1>
@@ -1313,14 +1311,12 @@
                 fullscreenToggleBtn.classList.remove('active-laser');
                 fullscreenToggleBtn.classList.add('revealed', 'hologram-mode');
 
-                // Animación láser y activación del halo holográfico permanente para "VISIÓN"
                 const line1Container = document.getElementById('header-line1-container');
                 line1Container.classList.add('active-laser');
                 await new Promise(r => setTimeout(r, 600));
                 line1Container.classList.remove('active-laser');
                 line1Container.classList.add('revealed', 'hologram-mode');
 
-                // Animación láser y activación del halo holográfico permanente para "QUIMERA"
                 const wordQuimeraContainer = document.getElementById('word-quimera-container');
                 wordQuimeraContainer.classList.add('active-laser');
                 await new Promise(r => setTimeout(r, 600));
@@ -1342,7 +1338,7 @@
                 isCardBusy = false;
 
                 const mainFooter = document.getElementById('main-footer');
-            const footerText = document.getElementById('footer-text');
+                const footerText = document.getElementById('footer-text');
                 footerText.textContent = footerText.dataset.text.replace('2026', new Date().getFullYear());
                 mainFooter.classList.add('active-laser');
                 await new Promise(r => setTimeout(r, 600));
