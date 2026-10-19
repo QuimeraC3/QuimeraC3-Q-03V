@@ -368,7 +368,6 @@
             font-size: clamp(2.0rem, 09vw, 5rem); 
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #ffffff;
-            /* text-shadow retirado de aquí para permitir que herede el brillo holográfico animado del padre */
             margin-top: 2rem;
         }
 
@@ -383,8 +382,13 @@
             letter-spacing: 0.25em;
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #000000;
-            /* text-shadow retirado de aquí para permitir que herede el brillo holográfico animado del padre */
             color: #ffffff;
+        }
+
+        .quimera-letter {
+            display: inline-block;
+            color: #ffffff;
+            transition: color 0.4s ease;
         }
 
         .subtitle-text {
@@ -695,8 +699,17 @@
             <span id="header-line1">VISIÓN</span>
         </h1>
         
+        <!-- Contenedor con letras independientes para QUIMERA -->
         <h1 class="arrow-02-text laser-burn-effect" id="word-quimera-container" data-text="QUIMERA">
-            <span id="word-quimera">QUIMERA</span>
+            <span id="word-quimera">
+                <span class="quimera-letter" data-index="0">Q</span>
+                <span class="quimera-letter" data-index="1">U</span>
+                <span class="quimera-letter" data-index="2">I</span>
+                <span class="quimera-letter" data-index="3">M</span>
+                <span class="quimera-letter" data-index="4">E</span>
+                <span class="quimera-letter" data-index="5">R</span>
+                <span class="quimera-letter" data-index="6">A</span>
+            </span>
         </h1>
 
         <div class="subtitle-text laser-burn-effect" id="sub-text" data-text="Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.">Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.</div>
@@ -940,9 +953,48 @@
 
         let globalColorInterval = null;
 
+        // Implementación del efecto de blanco a dorado (cobre) hasta que sea seleccionada
         function enableFinalHyperlink() {
-            const wordContainer = document.getElementById('word-quimera');
+            const wordContainer = document.getElementById('word-quimera-container');
+            const letters = document.querySelectorAll('.quimera-letter');
+            
+            // Removemos el halo holográfico continuo para dar paso al parpadeo dinámico de colores
+            wordContainer.classList.remove('hologram-mode');
+            wordContainer.style.opacity = '1';
+            wordContainer.style.pointerEvents = 'auto';
             wordContainer.style.cursor = 'pointer';
+
+            const stepTime = 120; // Velocidad de transición entre cada letra
+
+            function runSequence() {
+                let i = 0;
+                function turnCopperGold(callback) {
+                    if (i < letters.length) {
+                        letters[i].style.color = '#c88b32';
+                        i++;
+                        globalColorInterval = setTimeout(() => turnCopperGold(callback), stepTime);
+                    } else if (callback) callback();
+                }
+
+                let j = 0;
+                function turnWhite(callback) {
+                    if (j < letters.length) {
+                        letters[j].style.color = '#ffffff';
+                        j++;
+                        globalColorInterval = setTimeout(() => turnWhite(callback), stepTime);
+                    } else if (callback) callback();
+                }
+
+                turnCopperGold(() => {
+                    i = 0;
+                    turnWhite(() => {
+                        j = 0;
+                        globalColorInterval = setTimeout(runSequence, 0);
+                    });
+                });
+            }
+
+            runSequence();
 
             wordContainer.onclick = () => {
                 clearTimeout(globalColorInterval);
