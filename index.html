@@ -8,13 +8,17 @@
     <!-- PRECARGA DEFINITIVA DE TODAS LAS IMÁGENES DEL ECOSISTEMA -->
     <link rel="preload" href="Quimera_Vision.webp" as="image">
     <link rel="preload" href="Quimera_QE_Mod.jpg" as="image">
-    <link rel="preload" href="glitch_Q.webp" as="image">
-    <link rel="preload" href="glitch_U.webp" as="image">
-    <link rel="preload" href="glitch_I.webp" as="image">
-    <link rel="preload" href="glitch_M.webp" as="image">
-    <link rel="preload" href="glitch_E.webp" as="image">
-    <link rel="preload" href="glitch_R.webp" as="image">
-    <link rel="preload" href="glitch_A.webp" as="image">
+    <link rel="preload" href="glitch_01.webp" as="image">
+    <link rel="preload" href="glitch_02.webp" as="image">
+    <link rel="preload" href="glitch_03.webp" as="image">
+    <link rel="preload" href="glitch_04.webp" as="image">
+    <link rel="preload" href="glitch_05.webp" as="image">
+    <link rel="preload" href="glitch_06.webp" as="image">
+    <link rel="preload" href="glitch_07.webp" as="image">
+    <link rel="preload" href="glitch_08.webp" as="image">
+    <link rel="preload" href="glitch_09.webp" as="image">
+    <link rel="preload" href="glitch_10.webp" as="image">
+    <link rel="preload" href="glitch_11.webp" as="image">
     <link rel="preload" href="01-borrador_T-P.png" as="image">
     <link rel="preload" href="02-Teoria-Preg.png" as="image">
     <link rel="preload" href="03-HECE.png" as="image">
@@ -759,8 +763,11 @@
             if (event.persisted) window.location.reload();
         });
 
+        // 11 imágenes de glitch indexadas correspondientes a cada uno de los 11 modales
         const glitchImages = [
-            'glitch_Q.webp', 'glitch_U.webp', 'glitch_I.webp', 'glitch_M.webp', 'glitch_E.webp', 'glitch_R.webp', 'glitch_A.webp'
+            'glitch_01.webp', 'glitch_02.webp', 'glitch_03.webp', 'glitch_04.webp',
+            'glitch_05.webp', 'glitch_06.webp', 'glitch_07.webp', 'glitch_08.webp',
+            'glitch_09.webp', 'glitch_10.webp', 'glitch_11.webp'
         ];
 
         // CONTROL DE MOVIMIENTO DEL CURSOR
@@ -958,7 +965,6 @@
             const wordContainer = document.getElementById('word-quimera-container');
             const letters = document.querySelectorAll('.quimera-letter');
             
-            // Removemos el halo holográfico continuo para dar paso al parpadeo dinámico de colores
             wordContainer.classList.remove('hologram-mode');
             wordContainer.style.opacity = '1';
             wordContainer.style.pointerEvents = 'auto';
@@ -1029,7 +1035,6 @@
 
             const elementsToAnimate = [titleElem];
 
-            // 1. Insertar bloques de contenido en el cuerpo del modal
             for (let block of contentData) {
                 const blockElem = document.createElement(block.type === 'flow' ? 'div' : 'p');
                 if (block.type === 'flow') {
@@ -1043,21 +1048,17 @@
                 elementsToAnimate.push(blockElem);
             }
 
-            // 2. Incluir el botón de cierre (mantiene su contenedor .modal-close-wrapper alineado a la derecha)
             elementsToAnimate.push(closeElem);
 
             await new Promise(r => setTimeout(r, 100));
 
-            // 3. Disparar los láseres con solapamiento secuencial rápido (250ms de desfase)
             for (let el of elementsToAnimate) {
                 el.classList.add('active-laser');
                 await new Promise(r => setTimeout(r, 250));
             }
 
-            // Esperar a que concluya la última animación láser
             await new Promise(r => setTimeout(r, 600));
 
-            // Fijar el estado revelado definitivo
             for (let el of elementsToAnimate) {
                 el.classList.remove('active-laser');
                 el.classList.add('revealed');
@@ -1105,7 +1106,6 @@
                 const data = storyData[currentStep];
                 modalBody.style.textAlign = data.align || 'left';
                 
-                // Animación traslapada para el modal principal
                 await animateModalContent(modalTitle, modalBody, modalCloseBtn, data.title, data.content);
                 
                 isModalBusy = false;
@@ -1232,7 +1232,6 @@
 
             const formattedContent = paragraphs.map(text => ({ type: 'p', text: text }));
             
-            // Animación traslapada apuntando correctamente a los elementos del submodal
             await animateModalContent(subModalTitle, subModalBody, subModalCloseBtn, "MODELO HELICOIDAL DEL DESARROLLO DEL CONOCIMIENTO.", formattedContent);
 
             isSubModalBusy = false;
