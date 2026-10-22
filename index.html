@@ -50,11 +50,6 @@
             display: flex;
             flex-direction: column;
             background-color: #000000;
-            transition: filter 1s ease;
-        }
-
-        body.blurring {
-            filter: blur(12px);
         }
 
         /* CAPA CRT SCANLINES (Efecto de televisión antigua global) */
@@ -102,6 +97,16 @@
             transition: opacity 1000ms ease, filter 0.5s ease;
         }
 
+        /* Clase para aplicar desenfoque exclusivamente al fondo y elementos estáticos, protegiendo al glitch */
+        .blurring-content header,
+        .blurring-content .top-bar,
+        .blurring-content main,
+        .blurring-content footer,
+        .blurring-content #bg-layer {
+            filter: blur(12px);
+            transition: filter 0.5s ease;
+        }
+
         /* Capa de luz reactiva exclusiva del puntero */
         .cursor-light-glow {
             position: fixed;
@@ -133,7 +138,7 @@
             transition: opacity 1.5s ease;
         }
 
-        /* Capa de Glitch Central para las transiciones previas al modal */
+        /* Capa de Glitch Central para las transiciones previas al modal (Mantenida totalmente nítida y sobre el desenfoque) */
         #glitch-overlay {
             position: fixed;
             top: 0;
@@ -197,7 +202,7 @@
             width: 100%;
             z-index: 100;
             opacity: 0;
-            transition: opacity 500ms ease;
+            transition: opacity 500ms ease, filter 0.5s ease;
         }
 
         .top-bar-container {
@@ -364,6 +369,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+            transition: filter 0.5s ease;
         }
 
         #header-line1 {
@@ -419,6 +425,7 @@
             padding: 2rem 2rem 10vh 2rem; 
             z-index: 10;
             position: relative;
+            transition: filter 0.5s ease;
         }
 
         .seq-card {
@@ -653,6 +660,7 @@
             color: #ffffff;
             font-size: clamp(0.7rem, 1.2vw, 0.85rem);
             z-index: 100;
+            transition: filter 0.5s ease;
         }
 
         footer p {
@@ -1004,7 +1012,7 @@
 
             wordContainer.onclick = () => {
                 clearTimeout(globalColorInterval);
-                document.body.classList.add('blurring');
+                document.body.classList.add('blurring-content');
 
                 const overlay = document.getElementById('intro-overlay');
                 overlay.style.backgroundColor = '#ffffff';
@@ -1093,10 +1101,11 @@
                 triggerMatrixAndFadeElements();
             }
 
-            document.body.classList.add('blurring');
+            // Aplicamos la clase que desenfoca el fondo y el contenido estático, dejando el glitch nítido
+            document.body.classList.add('blurring-content');
 
             triggerCardGlitch(async () => {
-                document.body.classList.remove('blurring');
+                document.body.classList.remove('blurring-content');
                 mainModal.classList.add('show');
                 modalWindow.classList.remove('tv-off');
                 modalWindow.classList.add('tv-on');
