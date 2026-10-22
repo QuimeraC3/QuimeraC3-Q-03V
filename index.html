@@ -138,7 +138,7 @@
             transition: opacity 1.5s ease;
         }
 
-        /* Capa de Glitch Central (Mantenida totalmente nítida) */
+        /* Capa de Glitch Central: Se mantiene nítida sin backdrop-filter */
         #glitch-overlay {
             position: fixed;
             top: 0;
@@ -1096,7 +1096,14 @@
         centralCard.addEventListener('click', async () => {
             if (isCardBusy || isModalBusy) return;
 
-            // Aplicamos desenfoque únicamente a los elementos de fondo, manteniendo el glitch nítido
+            // SI ES EL ÚLTIMO PASO: Programamos el retraso de 2 segundos para activar la lluvia de Matrix
+            if (currentStep === storyData.length - 1) {
+                setTimeout(() => {
+                    triggerMatrixAndFadeElements();
+                }, 2000);
+            }
+
+            // Aplicamos desenfoque únicamente a los elementos de fondo
             document.body.classList.add('blurring-content');
 
             triggerCardGlitch(async () => {
@@ -1137,15 +1144,11 @@
                     await updateCardTitleLaser(storyData[currentStep].title);
                     isCardBusy = false; 
                 } else {
-                    // Fin de todas las animaciones y modales: retrasamos 2 segundos la activación de la lluvia de Matrix
+                    centralCard.classList.add('tv-off-card');
                     setTimeout(() => {
-                        triggerMatrixAndFadeElements();
-                        centralCard.classList.add('tv-off-card');
-                        setTimeout(() => {
-                            centralCard.style.display = 'none';
-                            enableFinalHyperlink();
-                        }, 500);
-                    }, 2000);
+                        centralCard.style.display = 'none';
+                        enableFinalHyperlink();
+                    }, 500); 
                 }
             }, 400);
         };
