@@ -97,7 +97,7 @@
             transition: opacity 1000ms ease, filter 0.5s ease;
         }
 
-        /* Clase para aplicar desenfoque exclusivamente al fondo y elementos estáticos, protegiendo al glitch */
+        /* Desenfoque exclusivo del fondo e interfaz posterior sin tocar la capa de glitch */
         .blurring-content header,
         .blurring-content .top-bar,
         .blurring-content main,
@@ -138,7 +138,7 @@
             transition: opacity 1.5s ease;
         }
 
-        /* Capa de Glitch Central para las transiciones previas al modal (Mantenida totalmente nítida y sobre el desenfoque) */
+        /* Capa de Glitch Central: Se elimina el backdrop-filter para asegurar máxima nitidez en la imagen */
         #glitch-overlay {
             position: fixed;
             top: 0;
@@ -152,7 +152,6 @@
             pointer-events: none;
             opacity: 0;
             background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
             transition: opacity 0.1s ease;
         }
 
@@ -1101,7 +1100,7 @@
                 triggerMatrixAndFadeElements();
             }
 
-            // Aplicamos la clase que desenfoca el fondo y el contenido estático, dejando el glitch nítido
+            // Aplicamos desenfoque únicamente a los elementos de fondo, manteniendo el glitch nítido
             document.body.classList.add('blurring-content');
 
             triggerCardGlitch(async () => {
