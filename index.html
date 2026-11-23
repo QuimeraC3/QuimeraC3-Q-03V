@@ -410,16 +410,25 @@
             left: 50% !important;
             transform: translate(-50%, -50%) !important;
             margin: 0 !important;
-            max-width: 96vw;
-            clip-path: inset(0 0 0 0) !important;
-            z-index: 24920 !important;
+            padding: 0.25rem 0.75rem !important;
+            width: auto !important;
+            max-width: 96vw !important;
+            font-family: Georgia, "Times New Roman", serif !important;
+            text-align: center !important;
+            clip-path: none !important;
+            -webkit-clip-path: none !important;
+            filter: none !important;
+            z-index: 30000 !important;
+            pointer-events: auto !important;
         }
 
         #word-quimera-container.final-portal-active .quimera-portal-link {
+            display: inline-block !important;
             pointer-events: auto !important;
             cursor: pointer !important;
+            text-decoration: none !important;
             outline: none;
-            white-space: nowrap;
+            white-space: nowrap !important;
         }
 
         #word-quimera-container.final-portal-active .quimera-portal-link:focus-visible #word-quimera {
@@ -429,14 +438,16 @@
         }
 
         #word-quimera-container.final-portal-active #word-quimera {
-            display: inline-flex;
+            display: inline-flex !important;
             align-items: center;
             justify-content: center;
-            font-size: clamp(2.4rem, 8.8vw, 6.2rem);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.3rem, 8.5vw, 6rem);
             font-weight: 900;
             letter-spacing: 0.04em;
             line-height: 1.15;
-            white-space: nowrap;
+            white-space: nowrap !important;
+            -webkit-text-stroke: 1.5px #000000;
             text-shadow: 0 0 18px rgba(56, 189, 248, 0.55), 0 5px 24px rgba(0, 0, 0, 0.9);
             filter: drop-shadow(0 0 20px rgba(200, 139, 50, 0.22));
             transition: transform 0.25s ease, filter 0.25s ease;
@@ -791,7 +802,7 @@
             .nav-links { justify-content: center; gap: 0.8rem; }
             header { padding: 2rem 1rem 1rem 1rem; }
             #word-quimera-container.final-portal-active #word-quimera {
-                font-size: clamp(2.15rem, 10.5vw, 4.2rem) !important;
+                font-size: clamp(2.1rem, 10vw, 4.2rem) !important;
                 letter-spacing: 0.03em !important;
                 white-space: nowrap !important;
             }
@@ -1157,9 +1168,14 @@ GUÁRDALO, TE SERÁ ÚTIL EN UN FUTURO CERCANO.</p>
             const wordLink = document.getElementById('word-quimera-link');
             const letters = document.querySelectorAll('.quimera-letter');
 
-            wordContainer.classList.remove('fade-out-element', 'hologram-mode', 'active-laser');
+            // Liberar QUIMERA del <header> (que tiene z-index:10 y filter/transition) y colocarla en <body>
+            if (wordContainer.parentElement !== document.body) {
+                document.body.appendChild(wordContainer);
+            }
+
+            wordContainer.classList.remove('fade-out-element', 'hologram-mode', 'active-laser', 'laser-burn-effect');
             wordContainer.classList.add('final-portal-active', 'revealed');
-            wordContainer.style.clipPath = 'inset(0 0 0 0)';
+            wordContainer.style.clipPath = 'none';
             wordContainer.style.opacity = '0';
             wordContainer.style.pointerEvents = 'auto';
 
