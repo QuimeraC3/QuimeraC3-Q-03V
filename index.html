@@ -403,14 +403,19 @@
             left: 50% !important;
             transform: translate(-50%, -50%) !important;
             margin: 0 !important;
+            max-width: 96vw;
             z-index: 24905;
         }
 
         #word-quimera-container.final-portal-active #word-quimera {
-            font-size: clamp(2.65rem, 10vw, 7rem);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(2.4rem, 8.8vw, 6.2rem);
             font-weight: 900;
-            letter-spacing: 0.10em;
-            line-height: 1.2;
+            letter-spacing: 0.04em;
+            line-height: 1.15;
+            white-space: nowrap;
             text-shadow: 0 0 18px rgba(56, 189, 248, 0.55), 0 5px 24px rgba(0, 0, 0, 0.9);
             filter: drop-shadow(0 0 20px rgba(200, 139, 50, 0.22));
         }
@@ -759,7 +764,8 @@
             .nav-links { justify-content: center; gap: 0.8rem; }
             header { padding: 2rem 1rem 1rem 1rem; }
             #word-quimera-container.final-portal-active #word-quimera {
-                font-size: clamp(2.35rem, 12vw, 4.5rem) !important;
+                font-size: clamp(2.15rem, 10.5vw, 4.2rem) !important;
+                letter-spacing: 0.03em !important;
                 white-space: nowrap !important;
             }
             .submodal-close { top: -15px; right: 0px; text-shadow: 0 0 10px #000; }
@@ -1126,7 +1132,9 @@ GUÁRDALO, TE SERÁ ÚTIL EN UN FUTURO CERCANO.</p>
             wordContainer.style.opacity = '0';
             wordContainer.style.pointerEvents = 'auto';
             wordContainer.style.cursor = 'pointer';
+            wordContainer.setAttribute('role', 'link');
             wordContainer.setAttribute('tabindex', '0');
+            wordContainer.setAttribute('aria-label', 'Ir a https://quimerac3.github.io/QuimeraC3-Q/');
 
             // Aparición natural de QUIMERA una vez que el último modal ha desaparecido
             requestAnimationFrame(() => {
